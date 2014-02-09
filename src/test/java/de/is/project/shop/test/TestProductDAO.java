@@ -1,5 +1,8 @@
 package de.is.project.shop.test;
 
+import java.util.Collection;
+import java.util.LinkedList;
+
 import javax.inject.Inject;
 
 import org.junit.After;
@@ -20,27 +23,54 @@ public class TestProductDAO {
 
 	@Inject
 	ProductDAO testDao;
-
-	Product testProduct;
+	Collection<Product> createdProducts = new LinkedList<Product>();
 
 	@Before
 	public void setUp() {
-
 	}
 
 	@After
 	public void tearDown() {
-		if (testProduct != null) {
-			testDao.delete(testProduct);
+		for (Product p : createdProducts) {
+			Product pTest = testDao.findById(p.getId());
+			if (pTest != null) {
+				testDao.delete(p);
+			}
 		}
 
 	}
 
 	@Test
 	public void testPersist() {
-		testProduct = new ProductImpl();
+		Product testProduct = new ProductImpl();
 		testDao.persist(testProduct);
+		createdProducts.add(testProduct);
 		Assert.isTrue(testProduct.getId() > 0);
+
 	}
 
+	@Test
+	public void testFindById() {
+		Product testProduct = new ProductImpl();
+		testDao.persist(testProduct);
+		createdProducts.add(testProduct);
+
+		Product p = testDao.findById(testProduct.getId());
+		Assert.isTrue(p.getId() == testProduct.getId());
+
+	}
+
+	@Test
+	public void testDelete() {
+		Product testProduct = new ProductImpl();
+		testDao.persist(testProduct);
+		createdProducts.add(testProduct);
+
+		int id = testProduct.getId();
+		Assert.isTrue(testProduct.getId() > 0);
+
+		testDao.delete(testProduct);
+		Product p = testDao.findById(id);
+		Assert.isNull(p);
+	}
 }
