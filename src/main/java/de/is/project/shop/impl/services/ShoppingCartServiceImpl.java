@@ -1,10 +1,6 @@
 package de.is.project.shop.impl.services;
 
 import javax.inject.Named;
-
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Scope;
 
 import de.is.project.shop.api.domain.Product;
@@ -12,16 +8,14 @@ import de.is.project.shop.api.domain.ShoppingCart;
 import de.is.project.shop.api.domain.ShoppingCartPosition;
 import de.is.project.shop.api.domain.Visitor;
 import de.is.project.shop.api.services.ShoppingCartService;
+import de.is.project.shop.impl.domain.ShoppingCartPositionImpl;
+import de.is.project.shop.impl.domain.ShoppingCartVisitor;
 
 @Named
 @Scope("prototype")
-public class ShoppingCartServiceImpl implements ShoppingCartService, ApplicationContextAware {
+public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	private ShoppingCart shoppingCart;
-	
-	ApplicationContext applicationContext = null;
-	
-	
 	
 	@Override
 	public void addProduct(Product product) {
@@ -36,7 +30,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService, Application
 			}
 		}
 		if (!found) {
-			ShoppingCartPosition pos= applicationContext.getBean(ShoppingCartPosition.class);
+			ShoppingCartPosition pos= new ShoppingCartPositionImpl();
 			pos.setProduct(product);
 			pos.setQuantity(1);
 			pos.setTotal(product.getPrice());
@@ -73,7 +67,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService, Application
 	
 	@Override
 	public void refreshShoppingCart() {
-		Visitor visitor = applicationContext.getBean(Visitor.class);
+		Visitor visitor = new ShoppingCartVisitor();
 		this.shoppingCart.accept(visitor);
 	}
 
@@ -82,11 +76,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService, Application
 		if (this.shoppingCart == null) {
 			this.shoppingCart = cart;
 		}
-	}
-
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
 	}
 
 	@Override
