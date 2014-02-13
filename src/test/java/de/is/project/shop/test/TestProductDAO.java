@@ -42,27 +42,45 @@ public class TestProductDAO {
 
 	@Test
 	public void testPersist() {
+
 		Product testProduct = new ProductImpl();
+		testProduct.setDescription("Testme");
 		testDao.persist(testProduct);
+
 		createdProducts.add(testProduct);
-		Assert.isTrue(testProduct.getId() > 0);
+
+		Product persistedProduct = testDao.findById(testProduct.getId());
+
+		Assert.isTrue(testProduct.getId() > -1);
+		Assert.notNull(persistedProduct);
+		Assert.isTrue(persistedProduct.getId() == testProduct.getId());
+		Assert.isTrue(persistedProduct.getDescription().equals(
+				testProduct.getDescription()));
+		Assert.isTrue(testProduct == persistedProduct);
 
 	}
 
 	@Test
 	public void testFindById() {
 		Product testProduct = new ProductImpl();
+		testProduct.setDescription("Testme");
+
 		testDao.persist(testProduct);
+
 		createdProducts.add(testProduct);
 
 		Product p = testDao.findById(testProduct.getId());
+		Assert.notNull(p);
 		Assert.isTrue(p.getId() == testProduct.getId());
 
 	}
 
 	@Test
 	public void testDelete() {
+
 		Product testProduct = new ProductImpl();
+		testProduct.setDescription("Testme");
+
 		testDao.persist(testProduct);
 		createdProducts.add(testProduct);
 
@@ -72,5 +90,38 @@ public class TestProductDAO {
 		testDao.delete(testProduct);
 		Product p = testDao.findById(id);
 		Assert.isNull(p);
+
+		createdProducts.remove(testProduct);
+
+	}
+
+	@Test
+	public void testUpdate() {
+
+		String description1 = "Testme";
+		Product testProduct = new ProductImpl();
+		testProduct.setDescription(description1);
+
+		testDao.persist(testProduct);
+		createdProducts.add(testProduct);
+
+		// initial persist
+		Product persistedProduct = testDao.findById(testProduct.getId());
+		Assert.isTrue(persistedProduct.getId() == testProduct.getId());
+		Assert.isTrue(persistedProduct.getDescription().equals(description1));
+
+		// set new description and update
+		String description2 = "New Description";
+		persistedProduct.setDescription(description2);
+
+		// update
+		testDao.update(persistedProduct);
+
+		Product persistedProduct2 = testDao.findById(persistedProduct.getId());
+		Assert.notNull(persistedProduct2);
+		Assert.isTrue(persistedProduct2.getDescription().equals(description2));
+
+		createdProducts.remove(testProduct);
+
 	}
 }
