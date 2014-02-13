@@ -18,11 +18,15 @@ import de.is.project.shop.api.services.ShoppingCartService;
 public class ShoppingCartServiceImpl implements ShoppingCartService, ApplicationContextAware {
 
 	private ShoppingCart shoppingCart;
+	
 	ApplicationContext applicationContext = null;
+	
+	
 	
 	@Override
 	public void addProduct(Product product) {
 		boolean found = false;
+		
 		for (ShoppingCartPosition pos : this.shoppingCart
 				.getShoppingCartPositions()) {
 			if (pos.getProduct().getId() == product.getId()) {
@@ -46,13 +50,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService, Application
 		for (ShoppingCartPosition pos : this.shoppingCart
 				.getShoppingCartPositions()) {
 			if (pos.getProduct().getId() == product.getId()) {
-				pos.setQuantity(pos.getQuantity() - 1);
-				if (pos.getQuantity() < 1) {
+				if (pos.getQuantity() < 2) {
 					if(this.shoppingCart.getShoppingCartPositions().size() == 1){
 						this.shoppingCart.getShoppingCartPositions().clear();
 					}else{
 						this.shoppingCart.getShoppingCartPositions().remove(pos);
 					}
+				}else{
+					pos.setQuantity(pos.getQuantity()-1);
 				}
 				break;
 			}
