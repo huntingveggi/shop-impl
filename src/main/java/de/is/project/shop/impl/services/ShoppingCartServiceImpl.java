@@ -48,7 +48,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService, Application
 			if (pos.getProduct().getId() == product.getId()) {
 				pos.setQuantity(pos.getQuantity() - 1);
 				if (pos.getQuantity() < 1) {
-					this.shoppingCart.getShoppingCartPositions().remove(pos);
+					if(this.shoppingCart.getShoppingCartPositions().size() == 1){
+						this.shoppingCart.getShoppingCartPositions().clear();
+					}else{
+						this.shoppingCart.getShoppingCartPositions().remove(pos);
+					}
 				}
 				break;
 			}
