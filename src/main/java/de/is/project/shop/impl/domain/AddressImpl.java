@@ -3,6 +3,11 @@ package de.is.project.shop.impl.domain;
 import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+
+@Entity(name = "Address")
 public class AddressImpl extends AbstractEntity implements Address {
 
 	Customer customer;
@@ -17,11 +22,13 @@ public class AddressImpl extends AbstractEntity implements Address {
 	}
 
 	@Override
+	@ManyToMany(targetEntity = CustomerImpl.class)
 	public void setCustomer(Customer customer) {
 		this.customer=customer;
 	}
 
 	@Override
+	@Column(name = "Street", nullable = false)
 	public String getStreet() {
 		return this.street;
 	}
@@ -32,6 +39,7 @@ public class AddressImpl extends AbstractEntity implements Address {
 	}
 
 	@Override
+	@Column(name = "StreetNumber", nullable = false)
 	public String getStreetNumber() {
 		return this.streetNumber;
 	}
@@ -42,6 +50,7 @@ public class AddressImpl extends AbstractEntity implements Address {
 	}
 
 	@Override
+	@Column(name = "ZipCode", nullable = false)
 	public String getZipCode() {
 		return this.zipCode;
 	}
@@ -52,6 +61,7 @@ public class AddressImpl extends AbstractEntity implements Address {
 	}
 
 	@Override
+	@Column(name = "Country", nullable = false)
 	public String getCountry() {
 		return this.country;
 	}
