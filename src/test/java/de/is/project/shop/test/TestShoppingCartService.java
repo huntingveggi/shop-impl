@@ -4,31 +4,30 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.is.project.shop.api.domain.Product;
 import de.is.project.shop.api.domain.ShoppingCart;
 import de.is.project.shop.api.services.*;
+import de.is.project.shop.impl.domain.ProductImpl;
+import de.is.project.shop.impl.domain.ShoppingCartImpl;
+import de.is.project.shop.impl.services.ShoppingCartServiceImpl;
 
 public class TestShoppingCartService {
-
-	private ApplicationContext context;
+	
 	private ShoppingCartService scs;
 	
 	@Before
 	public void setUp() {
-		context = new ClassPathXmlApplicationContext(
-				"spring.xml");
-		scs = context.getBean(ShoppingCartService.class);
-		ShoppingCart cart = context.getBean(ShoppingCart.class);
+		
+		scs = new ShoppingCartServiceImpl();
+		ShoppingCart cart = new ShoppingCartImpl();
 		scs.setShoppingCart(cart);
 	}
 	
 	@Test
 	public void testAddProduct1() {
 		
-		Product product1 = context.getBean(Product.class);
+		Product product1 = new ProductImpl();
 		product1.setName("Kuehlschrank1");
 		product1.setDescription("Niedriger Verbrauch zum spitzen Preis");
 		product1.setId(1);
@@ -38,7 +37,7 @@ public class TestShoppingCartService {
 		assertEquals(1, scs.getShoppingCart().getShoppingCartPositions().size());
 		assertEquals(20, scs.getShoppingCart().getTotal(), 0);
 		
-		Product product3 = context.getBean(Product.class);
+		Product product3 = new ProductImpl();
 		product3.setName("Kuehlschrank2");
 		product3.setDescription("Niedriger Verbrauch zum spitzen Preis");
 		product3.setId(2);

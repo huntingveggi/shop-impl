@@ -1,14 +1,8 @@
 package de.is.project.shop.impl.domain;
 
-import javax.inject.Named;
-
-import org.springframework.context.annotation.Scope;
-
 import de.is.project.shop.api.domain.Product;
 import de.is.project.shop.api.domain.ShoppingCartPosition;
 
-@Named
-@Scope("prototype")
 public class ShoppingCartPositionImpl implements ShoppingCartPosition{
 
 	private Product produkt;
