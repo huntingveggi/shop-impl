@@ -13,8 +13,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import de.is.project.shop.api.domain.Category;
 import de.is.project.shop.api.domain.Product;
 import de.is.project.shop.api.persistence.ProductDAO;
+import de.is.project.shop.impl.domain.CategoryImpl;
 import de.is.project.shop.impl.domain.ProductImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,8 +45,16 @@ public class TestProductDAO {
 	@Test
 	public void testPersist() {
 
+		CategoryImpl category1 = new CategoryImpl();
+		category1.setName("Category1");
+		CategoryImpl category2 = new CategoryImpl();
+		category2.setName("Category2");
+
 		Product testProduct = new ProductImpl();
 		testProduct.setDescription("Testme");
+		testProduct.getCategories().add(category1);
+		testProduct.getCategories().add(category2);
+
 		testDao.persist(testProduct);
 
 		createdProducts.add(testProduct);
@@ -57,8 +67,78 @@ public class TestProductDAO {
 		Assert.isTrue(persistedProduct.getDescription().equals(
 				testProduct.getDescription()));
 		Assert.isTrue(testProduct == persistedProduct);
+		Assert.isTrue(persistedProduct.getCategories().size() == 2);
 
 	}
+
+	@Test
+	public void testPersistWithAddingCategories() {
+
+		CategoryImpl category1 = new CategoryImpl();
+		category1.setName("Category1");
+		CategoryImpl category2 = new CategoryImpl();
+		category2.setName("Category2");
+
+		Product testProduct = new ProductImpl();
+		testProduct.setDescription("Testme");
+		testProduct.getCategories().add(category1);
+		testProduct.getCategories().add(category2);
+
+		testDao.persist(testProduct);
+
+		createdProducts.add(testProduct);
+
+		Product persistedProduct = testDao.findById(testProduct.getId());
+
+		Assert.isTrue(persistedProduct.getCategories().size() == 2);
+
+		CategoryImpl category3 = new CategoryImpl();
+		category3.setName("Category3");
+		persistedProduct.getCategories().add(category3);
+		testDao.persist(persistedProduct);
+
+		Product persistedProduct3 = testDao.findById(persistedProduct.getId());
+		Assert.isTrue(persistedProduct3.getCategories().size() == 3);
+
+		boolean found = false;
+		for (Category cat : persistedProduct3.getCategories()) {
+			if (cat.getName().equals(category3.getName())) {
+				found = true;
+			}
+		}
+		Assert.isTrue(found);
+
+	}
+
+	// @Test
+	// public void testPersistWithRemovingCategory() {
+	//
+	// CategoryImpl category1 = new CategoryImpl();
+	// category1.setName("Category1");
+	// CategoryImpl category2 = new CategoryImpl();
+	// category1.setName("Category2");
+	//
+	// Product testProduct = new ProductImpl();
+	// testProduct.setDescription("Testme");
+	// testProduct.getCategories().add(category1);
+	// testProduct.getCategories().add(category2);
+	//
+	// testDao.persist(testProduct);
+	//
+	// createdProducts.add(testProduct);
+	//
+	// Product persistedProduct = testDao.findById(testProduct.getId());
+	//
+	// Assert.isTrue(persistedProduct.getCategories().size() == 2);
+	//
+	// Category cat = persistedProduct.getCategories().iterator().next();
+	// persistedProduct.getCategories().remove(cat);
+	// testDao.persist(persistedProduct);
+	//
+	// Product persistedProduct3 = testDao.findById(persistedProduct.getId());
+	// Assert.isTrue(persistedProduct3.getCategories().size() == 2);
+	//
+	// }
 
 	@Test
 	public void testFindById() {

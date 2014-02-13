@@ -4,6 +4,8 @@ import javax.persistence.Column;
 
 import de.is.project.shop.api.domain.Customer;
 
+
+
 public class CustomerImpl extends AbstractEntity implements Customer {
 
 	String title;

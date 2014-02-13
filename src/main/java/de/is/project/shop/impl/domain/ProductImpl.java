@@ -2,6 +2,7 @@ package de.is.project.shop.impl.domain;
 
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,9 +18,9 @@ import de.is.project.shop.api.domain.Product;
 @Entity(name = "products")
 public class ProductImpl extends AbstractEntity implements Product {
 
-	Producer producer;
-	private Collection<Category> categories;
-	private Collection<Attribute> attributes;
+	private Producer producer;
+	private Collection<Category> categories = new LinkedList<>();
+	private Collection<Attribute> attributes = new LinkedList<>();
 	private String name;
 	private String description;
 	private double price;
@@ -36,7 +37,7 @@ public class ProductImpl extends AbstractEntity implements Product {
 	}
 
 	@Override
-	@OneToMany(targetEntity = CategoryImpl.class, cascade = { CascadeType.ALL })
+	@OneToMany(targetEntity = CategoryImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true)
 	public Collection<Category> getCategories() {
 		return this.categories;
 	}
