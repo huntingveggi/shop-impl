@@ -13,7 +13,7 @@ import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
 
-@Entity(name="OrderItem")
+@Entity(name="Order")
 public class OrderImpl extends AbstractEntity implements Order {
 	
 	Collection<OrderItem> items;
