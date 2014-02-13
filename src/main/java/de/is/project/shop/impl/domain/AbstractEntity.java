@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import de.is.project.shop.api.domain.Entity;
+import de.is.project.shop.api.domain.*;
 
 @MappedSuperclass
 public abstract class AbstractEntity implements Entity {
