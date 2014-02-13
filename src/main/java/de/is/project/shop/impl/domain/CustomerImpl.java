@@ -1,11 +1,9 @@
 package de.is.project.shop.impl.domain;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 
 import de.is.project.shop.api.domain.Customer;
 
-@Entity(name = "Customer")
 public class CustomerImpl extends AbstractEntity implements Customer {
 
 	String title;
@@ -13,7 +11,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	String lastName;
 	String sex;
 	boolean billingCustomer;
-	
+
 	@Override
 	@Column(name = "Title", nullable = true)
 	public String getTitle() {
@@ -22,7 +20,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 
 	@Override
 	public void setTitle(String title) {
-		this.title=title;
+		this.title = title;
 	}
 
 	@Override
@@ -33,7 +31,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 
 	@Override
 	public void setFirstName(String firstName) {
-		this.firstName=firstName;
+		this.firstName = firstName;
 	}
 
 	@Override
@@ -44,7 +42,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 
 	@Override
 	public void setLastName(String lastName) {
-		this.lastName=lastName;
+		this.lastName = lastName;
 	}
 
 	@Override
@@ -55,7 +53,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 
 	@Override
 	public void setSex(String sex) {
-		this.sex=sex;
+		this.sex = sex;
 	}
 
 	@Override
@@ -66,7 +64,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 
 	@Override
 	public void setBillingCustomer(boolean billingCustomer) {
-		this.billingCustomer=billingCustomer;
+		this.billingCustomer = billingCustomer;
 	}
 
 }

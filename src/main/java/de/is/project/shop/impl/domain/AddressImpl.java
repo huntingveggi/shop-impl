@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
-@Entity(name = "Address")
 public class AddressImpl extends AbstractEntity implements Address {
 
 	Customer customer;

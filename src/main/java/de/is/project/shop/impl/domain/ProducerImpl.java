@@ -4,19 +4,19 @@ import javax.persistence.Entity;
 
 import de.is.project.shop.api.domain.Producer;
 
-@Entity(name = "producer")
+@Entity(name = "producers")
 public class ProducerImpl extends AbstractEntity implements Producer {
+
+	private String name;
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.name;
 	}
 
 	@Override
 	public void setName(String name) {
-		// TODO Auto-generated method stub
-		
+		this.name = name;
 	}
 
 }

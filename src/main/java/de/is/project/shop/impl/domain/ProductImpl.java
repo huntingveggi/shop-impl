@@ -3,21 +3,18 @@ package de.is.project.shop.impl.domain;
 import java.io.InputStream;
 import java.util.Collection;
 
-import javax.inject.Named;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-
-import org.springframework.context.annotation.Scope;
 
 import de.is.project.shop.api.domain.Attribute;
 import de.is.project.shop.api.domain.Category;
 import de.is.project.shop.api.domain.Producer;
 import de.is.project.shop.api.domain.Product;
 
-@Named
-@Scope("prototype")
-@Entity(name = "product")
+@Entity(name = "products")
 public class ProductImpl extends AbstractEntity implements Product {
 
 	Producer producer;
@@ -39,15 +36,56 @@ public class ProductImpl extends AbstractEntity implements Product {
 	}
 
 	@Override
-	@Transient
+	@OneToMany(targetEntity = CategoryImpl.class, cascade = { CascadeType.ALL })
 	public Collection<Category> getCategories() {
 		return this.categories;
 	}
 
 	@Override
-	@OneToOne(targetEntity = ProducerImpl.class)
+	public String getDescription() {
+		return this.description;
+	}
+
+	@Override
+	public String getMeasurand() {
+		return this.measurand;
+	}
+
+	@Override
+	public String getName() {
+		return this.name;
+	}
+
+	@Override
+	@Transient
+	public InputStream getPicture() {
+		return this.picture;
+	}
+
+	@Override
+	public double getPrice() {
+		return this.price;
+	}
+
+	@Override
+	@OneToOne(targetEntity = ProducerImpl.class, cascade = { CascadeType.ALL })
 	public Producer getProducer() {
 		return this.producer;
+	}
+
+	@Override
+	public double getRateOfTaxation() {
+		return this.rateOfTaxation;
+	}
+
+	@Override
+	public int getStock() {
+		return this.stock;
+	}
+
+	@Override
+	public boolean isSpecialOffer() {
+		return isSpecialOffer;
 	}
 
 	public void setAttributes(Collection<Attribute> attributes) {
@@ -58,13 +96,15 @@ public class ProductImpl extends AbstractEntity implements Product {
 		this.categories = categories;
 	}
 
-	public void setProducer(Producer producer) {
-		this.producer = producer;
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+
 	}
 
 	@Override
-	public String getName() {
-		return this.name;
+	public void setMeasurand(String measurand) {
+		this.measurand = measurand;
 	}
 
 	@Override
@@ -73,19 +113,8 @@ public class ProductImpl extends AbstractEntity implements Product {
 	}
 
 	@Override
-	public String getDescription() {
-		return this.description;
-	}
-
-	@Override
-	public void setDescription(String description) {
-		this.description = description;
-
-	}
-
-	@Override
-	public double getPrice() {
-		return this.price;
+	public void setPicture(InputStream picture) {
+		this.picture = picture;
 	}
 
 	@Override
@@ -95,29 +124,8 @@ public class ProductImpl extends AbstractEntity implements Product {
 	}
 
 	@Override
-	public int getStock() {
-		return this.stock;
-	}
-
-	@Override
-	public void setStock(int stock) {
-		this.stock = stock;
-
-	}
-
-	@Override
-	public InputStream getPicture() {
-		return this.picture;
-	}
-
-	@Override
-	public void setPicture(InputStream picture) {
-		this.picture = picture;
-	}
-
-	@Override
-	public double getRateOfTaxation() {
-		return this.rateOfTaxation;
+	public void setProducer(Producer producer) {
+		this.producer = producer;
 	}
 
 	@Override
@@ -126,21 +134,14 @@ public class ProductImpl extends AbstractEntity implements Product {
 	}
 
 	@Override
-	public String getMeasurand() {
-		return this.measurand;
+	public void setSpecialOffer(boolean isSpecialOffer) {
+		this.isSpecialOffer = isSpecialOffer;
 	}
 
 	@Override
-	public void setMeasurand(String measurand) {
-		this.measurand = measurand;
-	}
+	public void setStock(int stock) {
+		this.stock = stock;
 
-	public boolean isSpecialOffer() {
-		return isSpecialOffer;
-	}
-
-	public void setSpecialOffer(boolean isSpecialOffer) {
-		this.isSpecialOffer = isSpecialOffer;
 	}
 
 }
