@@ -3,9 +3,14 @@ package de.is.project.shop.impl.domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
 import de.is.project.shop.api.domain.BillOfDelivery;
 import de.is.project.shop.api.domain.OrderItem;
 
+@Entity(name="BillOfDelivery")
 public class BillOfDeliveryImpl extends AbstractEntity implements
 		BillOfDelivery {
 
@@ -13,11 +18,13 @@ public class BillOfDeliveryImpl extends AbstractEntity implements
 	Date deliveryDate;
 
 	@Override
+	@OneToMany(targetEntity=OrderItemImpl.class)
 	public Collection<OrderItem> getOrderItems() {
 		return this.orderItems;
 	}
 
 	@Override
+	@Column(name = "DeliveryDate", nullable = false)
 	public Date getDeliveryDate() {
 		return this.deliveryDate;
 	}
