@@ -1,8 +1,13 @@
 package de.is.project.shop.impl.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
 import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
 
+@Entity(name="OrderItem")
 public class OrderItemImpl extends AbstractEntity implements OrderItem {
 
 	Product product;
@@ -13,6 +18,7 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	String status;
 	
 	@Override
+	@ManyToOne(targetEntity=ProductImpl.class)
 	public Product getProduct() {
 		return this.product;
 	}
@@ -23,6 +29,7 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
+	@Column(name = "Quantity", nullable = false)
 	public int getQuantity() {
 		return this.quantity;
 	}
@@ -33,6 +40,7 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
+	@Column(name = "Price", nullable = false)
 	public double getPrice() {
 		return this.price;
 	}
@@ -43,6 +51,7 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
+	@Column(name = "ReservedQuantity", nullable = false)
 	public int getReservedQuantity() {
 		return this.reservedQuantity;
 	}
@@ -53,6 +62,7 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
+	@Column(name = "Discount", nullable = true)
 	public double getDiscount() {
 		return this.discount;
 	}
@@ -63,6 +73,7 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
+	@Column(name = "Status", nullable = true)
 	public String getStatus() {
 		return this.status;
 	}
