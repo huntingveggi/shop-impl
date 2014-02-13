@@ -1,5 +1,6 @@
 package de.is.project.shop.impl.domain;
 
+import java.io.InputStream;
 import java.util.Collection;
 
 import javax.inject.Named;
@@ -13,6 +14,7 @@ import de.is.project.shop.api.domain.Attribute;
 import de.is.project.shop.api.domain.Category;
 import de.is.project.shop.api.domain.Producer;
 import de.is.project.shop.api.domain.Product;
+
 @Named
 @Scope("prototype")
 @Entity(name = "product")
@@ -25,7 +27,7 @@ public class ProductImpl extends AbstractEntity implements Product {
 	private String description;
 	private double price;
 	private int stock;
-	private byte[] picture;
+	private InputStream picture;
 	private double rateOfTaxation;
 	private String measurand;
 	private boolean isSpecialOffer;
@@ -78,7 +80,7 @@ public class ProductImpl extends AbstractEntity implements Product {
 	@Override
 	public void setDescription(String description) {
 		this.description = description;
-		
+
 	}
 
 	@Override
@@ -89,7 +91,7 @@ public class ProductImpl extends AbstractEntity implements Product {
 	@Override
 	public void setPrice(double price) {
 		this.price = price;
-		
+
 	}
 
 	@Override
@@ -100,16 +102,16 @@ public class ProductImpl extends AbstractEntity implements Product {
 	@Override
 	public void setStock(int stock) {
 		this.stock = stock;
-		
+
 	}
 
 	@Override
-	public byte[] getPicture() {
+	public InputStream getPicture() {
 		return this.picture;
 	}
 
 	@Override
-	public void setPicture(byte[] picture) {
+	public void setPicture(InputStream picture) {
 		this.picture = picture;
 	}
 
@@ -120,19 +122,19 @@ public class ProductImpl extends AbstractEntity implements Product {
 
 	@Override
 	public void setRateOfTaxation(double rateOfTaxation) {
-		this.rateOfTaxation = rateOfTaxation;		
+		this.rateOfTaxation = rateOfTaxation;
 	}
 
 	@Override
-	public String getMeasurand(){
+	public String getMeasurand() {
 		return this.measurand;
 	}
 
 	@Override
 	public void setMeasurand(String measurand) {
-		this.measurand = measurand;		
+		this.measurand = measurand;
 	}
-	
+
 	public boolean isSpecialOffer() {
 		return isSpecialOffer;
 	}
