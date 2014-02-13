@@ -5,7 +5,7 @@ import de.is.project.shop.api.domain.Customer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "Address")
 public class AddressImpl extends AbstractEntity implements Address {
@@ -22,7 +22,7 @@ public class AddressImpl extends AbstractEntity implements Address {
 	}
 
 	@Override
-	@ManyToMany(targetEntity = CustomerImpl.class)
+	@ManyToOne(targetEntity = CustomerImpl.class)
 	public void setCustomer(Customer customer) {
 		this.customer=customer;
 	}
