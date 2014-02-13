@@ -11,10 +11,8 @@ import org.springframework.context.annotation.Scope;
 
 import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Order;
-import de.is.project.shop.api.domain.Product;
 import de.is.project.shop.api.persistence.OrderDAO;
 import de.is.project.shop.impl.domain.OrderImpl;
-import de.is.project.shop.impl.domain.ProductImpl;
 
 @Named
 @Scope("prototype")
@@ -42,13 +40,19 @@ public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
 
 	@Override
 	public Order update(Order entity) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = getCurrentSession();
+		org.hibernate.Transaction tx = session.beginTransaction();
+		session.update(entity);
+		tx.commit();
+		return entity;
 	}
 
 	@Override
 	public void delete(Order entity) {
-		// TODO Auto-generated method stub
+		Session session = getCurrentSession();
+		org.hibernate.Transaction tx = session.beginTransaction();
+		session.delete(entity);
+		tx.commit();
 
 	}
 
