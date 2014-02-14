@@ -1,8 +1,11 @@
 package de.is.project.shop.impl.services;
 
+import javax.inject.Named;
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Scope;
 
 import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Order;
@@ -15,6 +18,8 @@ import de.is.project.shop.api.services.OrderService;
 import de.is.project.shop.impl.domain.OrderItemImpl;
 import de.is.project.shop.impl.domain.VisitorImpl;
 
+@Named
+@Scope("prototype")
 public class OrderServiceImpl implements OrderService, ApplicationContextAware {
 
 	private Order order;
