@@ -129,16 +129,6 @@ public class TestOrderDAO {
 		Assert.isTrue(o.getCustomer().getFirstName() == customer.getFirstName());
 		Assert.isTrue(o.getDeliveryAddress().getStreet() == deliveryAddress.getStreet());
 		Assert.isTrue(o.getDeliveryAddress().getStreet() == deliveryAddress.getStreet());
-		
-		System.out.println("Id of orders customer" + o.getCustomer().getId());
-		
-		Collection<Order> customersOrders = testDao.findByCustomer(o.getCustomer());
-		Assert.isTrue(customersOrders.isEmpty() == false);
-		
-		for(Order order : customersOrders){
-			System.out.println("Order ordered " + order.getOrderDate() + ", will be delivered to customer=" + order.getCustomer().getFirstName() + " " + order.getCustomer().getLastName()
-					+ " and address: " + order.getDeliveryAddress().getStreet() + ", " + order.getDeliveryAddress().getCity());
-		}
 
 	}
 	
@@ -201,24 +191,38 @@ public class TestOrderDAO {
 
 	}
 	
-	/*@Test
+	@Test
 	public void testFindByCustomer() {
 		Customer customer = createCustomer();
 		
-		Collection<Order> customersOrders = testDao.findByCustomer(customer);
-		Assert.isTrue(customersOrders.isEmpty() == true);
+		Address deliveryAddress = createAddress();
+		deliveryAddress.setCustomer(customer);
 		
-		Order order = createOrder();
-		order.setCustomer(customer);
+		Address invoiceAddress = createAddress();
+		invoiceAddress.setCustomer(customer);
+
+		customer.setAddress(deliveryAddress);
 		
-		Order persistedOrder = testDao.persist(order);
+		Order testOrder = createOrder();
+		testOrder.setDeliveryAddress(deliveryAddress);
+		testOrder.setInvoiceAddress(invoiceAddress);
+		testOrder.setCustomer(customer);
+
+		testDao.persist(testOrder);
 		
-		Customer persistedCustomer = testDao.findById(persistedOrder.getId()).getCustomer();
+		createdOrders.add(testOrder);
 		
-		customersOrders = testDao.findByCustomer(persistedCustomer);
+		Order o = testDao.findById(testOrder.getId());
+		
+		Collection<Order> customersOrders = testDao.findByCustomer(o.getCustomer());
 		Assert.isTrue(customersOrders.isEmpty() == false);
 		
-	}*/
+		for(Order order : customersOrders){
+			System.out.println("Order ordered " + order.getOrderDate() + ", will be delivered to customer " + order.getCustomer().getFirstName() + " " + order.getCustomer().getLastName()
+					+ ", " + order.getDeliveryAddress().getStreet() + ", " + order.getDeliveryAddress().getCity());
+		}
+		
+	}
 	
 	private Customer createCustomer(){
 		Customer customer = new CustomerImpl();
