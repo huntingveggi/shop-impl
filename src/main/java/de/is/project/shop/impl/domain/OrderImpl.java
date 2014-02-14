@@ -15,11 +15,10 @@ import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
-import de.is.project.shop.api.domain.Visitable;
 import de.is.project.shop.api.domain.Visitor;
 
 @Entity(name = "orders")
-public class OrderImpl extends AbstractEntity implements Order, Visitable {
+public class OrderImpl extends AbstractEntity implements Order{
 
 	Collection<OrderItem> items = new LinkedList<>();;
 	Date orderDate;
