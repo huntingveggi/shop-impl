@@ -1,11 +1,15 @@
 package de.is.project.shop.impl.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
 
+@Entity(name = "order_items")
 public class OrderItemImpl extends AbstractEntity implements OrderItem {
 
 	Product product;
@@ -16,53 +20,46 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	String status;
 
 	@Override
-	@ManyToOne(targetEntity = ProductImpl.class)
-	public Product getProduct() {
-		return this.product;
+	@Column(name = "discount", nullable = true)
+	public double getDiscount() {
+		return this.discount;
 	}
 
 	@Override
-	public void setProduct(Product product) {
-		this.product = product;
+	@ManyToOne(targetEntity=OrderImpl.class, cascade = { CascadeType.ALL })
+	public Order getOrder() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	@Column(name = "Quantity", nullable = false)
-	public int getQuantity() {
-		return this.quantity;
-	}
-
-	@Override
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	@Override
-	@Column(name = "Price", nullable = false)
+	@Column(name = "price", nullable = false)
 	public double getPrice() {
 		return this.price;
 	}
 
 	@Override
-	public void setPrice(double price) {
-		this.price = price;
+	@ManyToOne(targetEntity = ProductImpl.class, cascade = { CascadeType.ALL })
+	public Product getProduct() {
+		return this.product;
 	}
 
 	@Override
-	@Column(name = "ReservedQuantity", nullable = false)
+	@Column(name = "quantity", nullable = false)
+	public int getQuantity() {
+		return this.quantity;
+	}
+
+	@Override
+	@Column(name = "reserved_quantity", nullable = false)
 	public int getReservedQuantity() {
 		return this.reservedQuantity;
 	}
 
 	@Override
-	public void setReservedQuantity(int reservedQuantity) {
-		this.reservedQuantity = reservedQuantity;
-	}
-
-	@Override
-	@Column(name = "Discount", nullable = true)
-	public double getDiscount() {
-		return this.discount;
+	@Column(name = "status", nullable = true)
+	public String getStatus() {
+		return this.status;
 	}
 
 	@Override
@@ -71,9 +68,29 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
-	@Column(name = "Status", nullable = true)
-	public String getStatus() {
-		return this.status;
+	public void setOrder(Order order) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	@Override
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	@Override
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	@Override
+	public void setReservedQuantity(int reservedQuantity) {
+		this.reservedQuantity = reservedQuantity;
 	}
 
 	@Override
