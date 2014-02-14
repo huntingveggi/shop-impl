@@ -9,7 +9,7 @@ import de.is.project.shop.api.domain.ShoppingCartPosition;
 import de.is.project.shop.api.domain.Visitor;
 import de.is.project.shop.api.services.ShoppingCartService;
 import de.is.project.shop.impl.domain.ShoppingCartPositionImpl;
-import de.is.project.shop.impl.domain.ShoppingCartVisitor;
+import de.is.project.shop.impl.domain.VisitorImpl;
 
 @Named
 @Scope("prototype")
@@ -67,7 +67,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	
 	@Override
 	public void refreshShoppingCart() {
-		Visitor visitor = new ShoppingCartVisitor();
+		Visitor visitor = new VisitorImpl();
 		this.shoppingCart.accept(visitor);
 	}
 
