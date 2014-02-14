@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
@@ -18,6 +19,8 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	int reservedQuantity;
 	double discount;
 	String status;
+	double total;
+	Order order;
 
 	@Override
 	@Column(name = "discount", nullable = true)
@@ -26,7 +29,7 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
-	@ManyToOne(targetEntity=OrderImpl.class, cascade = { CascadeType.ALL })
+	@ManyToOne(targetEntity = OrderImpl.class, cascade = { CascadeType.ALL })
 	public Order getOrder() {
 		// TODO Auto-generated method stub
 		return null;
@@ -63,14 +66,19 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
+	@Transient
+	public double getTotal() {
+		return this.total;
+	}
+
+	@Override
 	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
 
 	@Override
 	public void setOrder(Order order) {
-		// TODO Auto-generated method stub
-
+		this.order=order;
 	}
 
 	@Override
@@ -96,6 +104,11 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	@Override
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	@Override
+	public void setTotal(double total) {
+		this.total=total;
 	}
 
 }

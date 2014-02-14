@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
@@ -25,6 +26,7 @@ public class OrderImpl extends AbstractEntity implements Order {
 	Address invoiceAddress;
 	double discount;
 	String status;
+	double total;
 
 	@Override
 	@ManyToOne(targetEntity = CustomerImpl.class, cascade = { CascadeType.ALL })
@@ -34,7 +36,7 @@ public class OrderImpl extends AbstractEntity implements Order {
 
 	@Override
 	@ManyToOne(targetEntity = AddressImpl.class, cascade = { CascadeType.ALL })
-	public Address getDeliveryAddress(){
+	public Address getDeliveryAddress() {
 		// TODO Auto-generated method stub
 		return this.deliveryAddress;
 	}
@@ -52,7 +54,7 @@ public class OrderImpl extends AbstractEntity implements Order {
 	}
 
 	@Override
-	@OneToMany(targetEntity=OrderItemImpl.class, cascade = { CascadeType.ALL })
+	@OneToMany(targetEntity = OrderItemImpl.class, cascade = { CascadeType.ALL })
 	public Collection<OrderItem> getItems() {
 		return this.items;
 	}
@@ -67,6 +69,12 @@ public class OrderImpl extends AbstractEntity implements Order {
 	@Column(name = "status", nullable = false)
 	public String getStatus() {
 		return this.status;
+	}
+	
+	@Override
+	@Transient
+	public double getTotal() {
+		return this.total;
 	}
 
 	@Override
@@ -101,6 +109,11 @@ public class OrderImpl extends AbstractEntity implements Order {
 	@Override
 	public void setStatus(String status) {
 		this.status = status;
-	}	
+	}
+	
+	@Override
+	public void setTotal(double total) {
+		this.total = total;
+	}
 
 }
