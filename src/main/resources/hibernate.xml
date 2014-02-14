@@ -42,6 +42,5 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 		<property name="annotatedPackages" value="de.is.project.shop.impl"></property>
 		<property name="packagesToScan" value="de.is.project.shop.impl"></property>
-
 	</bean>
 </beans>
