@@ -20,7 +20,6 @@ import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
 import de.is.project.shop.api.persistence.OrderDAO;
-import de.is.project.shop.api.persistence.ProductDAO;
 import de.is.project.shop.impl.domain.AddressImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
 import de.is.project.shop.impl.domain.OrderImpl;
@@ -33,8 +32,6 @@ public class TestOrderDAO {
 
 	@Inject
 	OrderDAO testDao;
-	@Inject
-	ProductDAO productDAO;
 	Collection<Order> createdOrders = new LinkedList<Order>();
 	
 	
