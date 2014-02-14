@@ -15,7 +15,14 @@ public class AddressImpl extends AbstractEntity implements Address {
 	String street;
 	String streetNumber;
 	String zipCode;
+	String city;
 	String country;
+
+	@Override
+	@Column(name = "city", nullable = false)
+	public String getCity() {
+		return this.city;
+	}
 
 	@Override
 	@Column(name = "country", nullable = false)
@@ -45,6 +52,11 @@ public class AddressImpl extends AbstractEntity implements Address {
 	@Column(name = "zip_code", nullable = false)
 	public String getZipCode() {
 		return this.zipCode;
+	}
+
+	@Override
+	public void setCity(String city) {
+		this.city=city;
 	}
 
 	@Override
