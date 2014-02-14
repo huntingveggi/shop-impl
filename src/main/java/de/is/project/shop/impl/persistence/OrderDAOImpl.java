@@ -1,10 +1,12 @@
 package de.is.project.shop.impl.persistence;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Scope;
@@ -58,8 +60,12 @@ public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
 
 	@Override
 	public Collection<Order> findByCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = getCurrentSession();
+		String sql = "FROM orders o WHERE o.customer = :customer";
+		Query query = session.createQuery(sql);
+		query.setParameter("customer",customer);
+		@SuppressWarnings("unchecked")
+		List<Order> customersOrders = query.list();
+		return customersOrders;
 	}
-
 }

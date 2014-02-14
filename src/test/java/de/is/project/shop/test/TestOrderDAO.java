@@ -129,6 +129,16 @@ public class TestOrderDAO {
 		Assert.isTrue(o.getCustomer().getFirstName() == customer.getFirstName());
 		Assert.isTrue(o.getDeliveryAddress().getStreet() == deliveryAddress.getStreet());
 		Assert.isTrue(o.getDeliveryAddress().getStreet() == deliveryAddress.getStreet());
+		
+		System.out.println("Id of orders customer" + o.getCustomer().getId());
+		
+		Collection<Order> customersOrders = testDao.findByCustomer(o.getCustomer());
+		Assert.isTrue(customersOrders.isEmpty() == false);
+		
+		for(Order order : customersOrders){
+			System.out.println("Order ordered " + order.getOrderDate() + ", will be delivered to customer=" + order.getCustomer().getFirstName() + " " + order.getCustomer().getLastName()
+					+ " and address: " + order.getDeliveryAddress().getStreet() + ", " + order.getDeliveryAddress().getCity());
+		}
 
 	}
 	
@@ -191,6 +201,25 @@ public class TestOrderDAO {
 
 	}
 	
+	/*@Test
+	public void testFindByCustomer() {
+		Customer customer = createCustomer();
+		
+		Collection<Order> customersOrders = testDao.findByCustomer(customer);
+		Assert.isTrue(customersOrders.isEmpty() == true);
+		
+		Order order = createOrder();
+		order.setCustomer(customer);
+		
+		Order persistedOrder = testDao.persist(order);
+		
+		Customer persistedCustomer = testDao.findById(persistedOrder.getId()).getCustomer();
+		
+		customersOrders = testDao.findByCustomer(persistedCustomer);
+		Assert.isTrue(customersOrders.isEmpty() == false);
+		
+	}*/
+	
 	private Customer createCustomer(){
 		Customer customer = new CustomerImpl();
 		customer.setFirstName("Max");
@@ -208,7 +237,7 @@ public class TestOrderDAO {
 		address.setStreetNumber("1b");
 		address.setZipCode("12345");
 		address.setCountry("Germany");
-		
+		address.setCity("City");
 		return address;
 	}
 	
@@ -221,6 +250,5 @@ public class TestOrderDAO {
 		
 		return order;
 	}
-
-
+	
 }
