@@ -5,11 +5,13 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import de.is.project.shop.api.domain.Invoice;
 import de.is.project.shop.api.domain.OrderItem;
 
+@Entity(name="invoices")
 public class InvoiceImpl extends AbstractEntity implements Invoice {
 
 	Date invoiceDate;
@@ -30,6 +32,10 @@ public class InvoiceImpl extends AbstractEntity implements Invoice {
 	@Override
 	public void setInvoiceDate(Date invoiceDate) {
 		this.invoiceDate = invoiceDate;
+	}
+	
+	public void setOrderItems(Collection<OrderItem> orderItems){
+		this.orderItems=orderItems;
 	}
 
 }
