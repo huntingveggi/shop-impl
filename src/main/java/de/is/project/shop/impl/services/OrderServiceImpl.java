@@ -1,5 +1,8 @@
 package de.is.project.shop.impl.services;
 
+import java.util.Collection;
+import java.util.Date;
+
 import javax.inject.Named;
 
 import org.springframework.beans.BeansException;
@@ -7,7 +10,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Scope;
 
-import de.is.project.shop.api.domain.Customer;
+import de.is.project.shop.api.domain.BillOfDelivery;
+import de.is.project.shop.api.domain.Invoice;
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
@@ -15,6 +19,8 @@ import de.is.project.shop.api.domain.Visitor;
 import de.is.project.shop.api.persistence.OrderDAO;
 import de.is.project.shop.api.persistence.ProductDAO;
 import de.is.project.shop.api.services.OrderService;
+import de.is.project.shop.impl.domain.BillOfDeliveryImpl;
+import de.is.project.shop.impl.domain.InvoiceImpl;
 import de.is.project.shop.impl.domain.OrderItemImpl;
 import de.is.project.shop.impl.domain.VisitorImpl;
 
@@ -74,10 +80,9 @@ public class OrderServiceImpl implements OrderService, ApplicationContextAware {
 	}
 
 	@Override
-	public void setOrder(Order order, Customer customer) {
+	public void setOrder(Order order) {
 		if (this.order == null) {
 			this.order = order;
-			this.order.setCustomer(customer);
 		}
 	}
 
@@ -87,7 +92,7 @@ public class OrderServiceImpl implements OrderService, ApplicationContextAware {
 	}
 
 	@Override
-	public Order placeOrder(Order order) {
+	public Order placeOrder() {
 		this.order.setStatus("In Process");
 		if (this.order != null) {
 			if (!this.order.getItems().isEmpty()) {
@@ -109,6 +114,7 @@ public class OrderServiceImpl implements OrderService, ApplicationContextAware {
 					}
 				}
 			}
+			this.order.setOrderDate(new Date());
 			OrderDAO orderDao = context.getBean(OrderDAO.class);
 			this.order = orderDao.persist(this.order);
 			return this.order;
@@ -121,6 +127,72 @@ public class OrderServiceImpl implements OrderService, ApplicationContextAware {
 			throws BeansException {
 		this.context = context;
 
+	}
+
+	@Override
+	public BillOfDelivery createBillOfDeliveryForItems(
+			Collection<OrderItem> orderItems) {
+		BillOfDelivery billOfDelivery = new BillOfDeliveryImpl();
+		billOfDelivery.setDeliveryDate(new Date());
+		for(OrderItem item : orderItems){
+			if(item.getOrder().getId() == this.order.getId()){
+				for(OrderItem theItem : this.order.getItems()){
+					if(theItem.getId() == item.getId()){
+						billOfDelivery.getOrderItems().add(theItem);
+						theItem.setBillOfDelivery(billOfDelivery);
+					}
+				}
+			}else{
+				//Throw Exception?
+			}
+		}
+		OrderDAO orderDao = context.getBean(OrderDAO.class);
+		this.order = orderDao.persist(this.order);
+		BillOfDelivery persistedBillOfDelivery = null;
+		for(OrderItem item : this.order.getItems()){
+			if(item.getBillOfDelivery().getDeliveryDate() == billOfDelivery.getDeliveryDate()){
+				persistedBillOfDelivery = item.getBillOfDelivery();
+			}
+		}
+		
+		if(persistedBillOfDelivery == null){
+			return null;
+		}else{
+			return persistedBillOfDelivery;
+		}
+		
+	}
+
+	@Override
+	public Invoice createInvoiceForItems(Collection<OrderItem> orderItems) {
+		Invoice invoice = new InvoiceImpl();
+		invoice.setInvoiceDate(new Date());
+		for(OrderItem item : orderItems){
+			if(item.getOrder().getId() == this.order.getId()){
+				for(OrderItem theItem : this.order.getItems()){
+					if(theItem.getId() == item.getId()){
+						invoice.getOrderItems().add(theItem);
+						theItem.setInvoice(invoice);
+					}
+				}
+			}else{
+				//Throw Exception?
+			}
+		}
+		OrderDAO orderDao = context.getBean(OrderDAO.class);
+		this.order = orderDao.persist(this.order);
+		Invoice persistedInvoice = null;
+		for(OrderItem item : this.order.getItems()){
+			if(item.getInvoice().getInvoiceDate() == invoice.getInvoiceDate()){
+				persistedInvoice = item.getInvoice();
+			}
+		}
+		
+		if(persistedInvoice == null){
+			return null;
+		}else{
+			return persistedInvoice;
+		}
 	}
 
 }

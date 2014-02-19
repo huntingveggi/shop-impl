@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import de.is.project.shop.api.domain.BillOfDelivery;
+import de.is.project.shop.api.domain.Invoice;
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
@@ -21,6 +23,15 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	String status;
 	double total;
 	Order order;
+	BillOfDelivery billOfDelivery;
+	Invoice invoice;
+
+	@Override
+	@ManyToOne(targetEntity=BillOfDeliveryImpl.class, cascade = { CascadeType.ALL })
+	public BillOfDelivery getBillOfDelivery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	@Column(name = "discount", nullable = true)
@@ -29,10 +40,15 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
+	@ManyToOne(targetEntity=InvoiceImpl.class, cascade = { CascadeType.ALL })
+	public Invoice getInvoice() {
+		return this.invoice;
+	}
+
+	@Override
 	@ManyToOne(targetEntity = OrderImpl.class, cascade = { CascadeType.ALL })
 	public Order getOrder() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.order;
 	}
 
 	@Override
@@ -72,13 +88,23 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
+	public void setBillOfDelivery(BillOfDelivery billOfDelivery) {
+		this.billOfDelivery=billOfDelivery;
+	}
+
+	@Override
 	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
 
 	@Override
+	public void setInvoice(Invoice invoice) {
+		this.invoice=invoice;
+	}
+
+	@Override
 	public void setOrder(Order order) {
-		this.order=order;
+		this.order = order;
 	}
 
 	@Override
@@ -108,7 +134,7 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 
 	@Override
 	public void setTotal(double total) {
-		this.total=total;
+		this.total = total;
 	}
 
 }
