@@ -22,6 +22,8 @@ import de.is.project.shop.api.services.OrderService;
 import de.is.project.shop.impl.domain.BillOfDeliveryImpl;
 import de.is.project.shop.impl.domain.InvoiceImpl;
 import de.is.project.shop.impl.domain.OrderItemImpl;
+import de.is.project.shop.impl.domain.OrderItemStatus;
+import de.is.project.shop.impl.domain.OrderStatus;
 import de.is.project.shop.impl.domain.VisitorImpl;
 
 @Named
@@ -93,11 +95,11 @@ public class OrderServiceImpl implements OrderService, ApplicationContextAware {
 
 	@Override
 	public Order placeOrder() {
-		this.order.setStatus("In Process");
+		this.order.setStatus(OrderStatus.IN_PROCESS.toString());
 		if (this.order != null) {
 			if (!this.order.getItems().isEmpty()) {
 				for (OrderItem item : this.order.getItems()) {
-					item.setStatus("In Process");
+					item.setStatus(OrderItemStatus.IN_PROCESS.toString());
 					ProductDAO productDao = context.getBean(ProductDAO.class);
 					Product currentProduct = productDao.findById(item.getProduct().getId());
 					if (currentProduct.getStock() == 0) {
