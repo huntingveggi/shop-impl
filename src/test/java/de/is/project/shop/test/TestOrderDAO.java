@@ -24,6 +24,8 @@ import de.is.project.shop.impl.domain.AddressImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
 import de.is.project.shop.impl.domain.OrderImpl;
 import de.is.project.shop.impl.domain.OrderItemImpl;
+import de.is.project.shop.impl.domain.OrderStatus;
+import de.is.project.shop.impl.domain.PaymentTerm;
 import de.is.project.shop.impl.domain.ProductImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -249,7 +251,8 @@ public class TestOrderDAO {
 		Date testDate = new Date();
 		order.setOrderDate(testDate);
 		order.setDiscount(0.05);
-		order.setStatus("In Delivery");
+		order.setStatus(OrderStatus.IN_PROCESS.toString());
+		order.setPaymentTerm(PaymentTerm.DEBIT_ADVICE.toString());
 		
 		return order;
 	}
