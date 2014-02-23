@@ -26,6 +26,7 @@ public class TestOrderService {
 	
 	@Inject
 	private OrderService service;
+	
 	@Inject
 	private ProductDAO productDAO;
 	

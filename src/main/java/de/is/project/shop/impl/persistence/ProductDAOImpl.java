@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.is.project.shop.api.domain.Category;
 import de.is.project.shop.api.domain.Producer;
@@ -20,13 +19,9 @@ import de.is.project.shop.api.domain.Product;
 import de.is.project.shop.api.persistence.ProductDAO;
 import de.is.project.shop.impl.domain.ProductImpl;
 
-@Named
-@Scope("prototype")
+@Repository
+@EnableTransactionManagement
 public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
-
-	@Inject
-	SessionFactory sessionFactory;
-	Session session;
 
 	/*
 	 * (non-Javadoc)
@@ -36,11 +31,10 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	 * .api.domain.Product)
 	 */
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Product persist(Product product) {
 		Session session = getCurrentSession();
-		org.hibernate.Transaction tx = session.beginTransaction();
-		session.save(product);
-		tx.commit();
+		session.saveOrUpdate(product);
 		return product;
 	}
 
@@ -50,9 +44,10 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	 * @see de.is.project.shop.api.persistence.ProductDAO#findById(int)
 	 */
 	@Override
-	public Product findById(int id) {
-		Session session = getCurrentSession();
-		Product product = (Product) session.byId(ProductImpl.class).load(id);
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Product findById(final int id) {
+		Product product = (Product) getCurrentSession().get(ProductImpl.class,
+				id);
 		return product;
 	}
 
@@ -65,6 +60,7 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Collection<Product> findByAttributes(HashMap<String, Object> map) {
 		Session session = getCurrentSession();
 		Criteria crit = session.createCriteria(ProductImpl.class);
@@ -83,11 +79,10 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	 * .api.domain.Product)
 	 */
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Product update(Product product) {
 		Session session = getCurrentSession();
-		org.hibernate.Transaction tx = session.beginTransaction();
 		session.update(product);
-		tx.commit();
 		return product;
 	}
 
@@ -99,11 +94,10 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	 * .api.domain.Product)
 	 */
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(Product product) {
 		Session session = getCurrentSession();
-		org.hibernate.Transaction tx = session.beginTransaction();
 		session.delete(product);
-		tx.commit();
 	}
 
 	/*
@@ -114,6 +108,7 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	 * .Collection)
 	 */
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Collection<Product> findByCategories(Collection<Category> categories) {
 		// TODO Auto-generated method stub
 		return null;
@@ -126,10 +121,20 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	 * de.is.project.shop.api.persistence.ProductDAO#findByProducer(de.is.project
 	 * .shop.api.domain.Producer)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Collection<Product> findByProducer(Producer producer) {
-		// TODO Auto-generated method stub
-		return null;
+		return getCurrentSession().createCriteria(ProductImpl.class)
+				.add(Restrictions.eq("producer", producer)).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Collection<Product> findAll() {
+
+		return getCurrentSession().createCriteria(ProductImpl.class).list();
 	}
 
 }

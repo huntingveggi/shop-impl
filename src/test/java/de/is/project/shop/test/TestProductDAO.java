@@ -1,16 +1,22 @@
 package de.is.project.shop.test;
 
 import java.util.Collection;
-import java.util.LinkedList;
 
 import javax.inject.Inject;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import de.is.project.shop.api.domain.Category;
@@ -21,11 +27,25 @@ import de.is.project.shop.impl.domain.ProductImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring.xml" })
+@TransactionConfiguration(defaultRollback = false)
 public class TestProductDAO {
 
 	@Inject
-	ProductDAO testDao;
-	Collection<Product> createdProducts = new LinkedList<Product>();
+	ProductDAO productDao;
+
+	@BeforeClass
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public static void setUpBeforeClass() {
+		String[] config = TestProductDAO.class.getAnnotation(
+				ContextConfiguration.class).locations();
+		ApplicationContext context = new ClassPathXmlApplicationContext(config);
+		((ConfigurableApplicationContext) context).registerShutdownHook();
+		ProductDAO productDAO = context.getBean(ProductDAO.class);
+		Collection<Product> products = productDAO.findAll();
+		for (Product product : products) {
+			productDAO.delete(product);
+		}
+	}
 
 	@Before
 	public void setUp() {
@@ -33,12 +53,6 @@ public class TestProductDAO {
 
 	@After
 	public void tearDown() {
-		for (Product p : createdProducts) {
-			Product pTest = testDao.findById(p.getId());
-			if (pTest != null) {
-				testDao.delete(p);
-			}
-		}
 
 	}
 
@@ -55,18 +69,15 @@ public class TestProductDAO {
 		testProduct.getCategories().add(category1);
 		testProduct.getCategories().add(category2);
 
-		testDao.persist(testProduct);
+		productDao.persist(testProduct);
 
-		createdProducts.add(testProduct);
-
-		Product persistedProduct = testDao.findById(testProduct.getId());
+		Product persistedProduct = productDao.findById(testProduct.getId());
 
 		Assert.isTrue(testProduct.getId() > -1);
 		Assert.notNull(persistedProduct);
 		Assert.isTrue(persistedProduct.getId() == testProduct.getId());
 		Assert.isTrue(persistedProduct.getDescription().equals(
 				testProduct.getDescription()));
-		Assert.isTrue(testProduct == persistedProduct);
 		Assert.isTrue(persistedProduct.getCategories().size() == 2);
 
 	}
@@ -84,20 +95,19 @@ public class TestProductDAO {
 		testProduct.getCategories().add(category1);
 		testProduct.getCategories().add(category2);
 
-		testDao.persist(testProduct);
+		productDao.persist(testProduct);
 
-		createdProducts.add(testProduct);
-
-		Product persistedProduct = testDao.findById(testProduct.getId());
+		Product persistedProduct = productDao.findById(testProduct.getId());
 
 		Assert.isTrue(persistedProduct.getCategories().size() == 2);
 
 		CategoryImpl category3 = new CategoryImpl();
 		category3.setName("Category3");
 		persistedProduct.getCategories().add(category3);
-		testDao.persist(persistedProduct);
+		productDao.persist(persistedProduct);
 
-		Product persistedProduct3 = testDao.findById(persistedProduct.getId());
+		Product persistedProduct3 = productDao.findById(persistedProduct
+				.getId());
 		Assert.isTrue(persistedProduct3.getCategories().size() == 3);
 
 		boolean found = false;
@@ -145,11 +155,9 @@ public class TestProductDAO {
 		Product testProduct = new ProductImpl();
 		testProduct.setDescription("Testme");
 
-		testDao.persist(testProduct);
+		productDao.persist(testProduct);
 
-		createdProducts.add(testProduct);
-
-		Product p = testDao.findById(testProduct.getId());
+		Product p = productDao.findById(testProduct.getId());
 		Assert.notNull(p);
 		Assert.isTrue(p.getId() == testProduct.getId());
 
@@ -161,17 +169,14 @@ public class TestProductDAO {
 		Product testProduct = new ProductImpl();
 		testProduct.setDescription("Testme");
 
-		testDao.persist(testProduct);
-		createdProducts.add(testProduct);
+		productDao.persist(testProduct);
 
 		int id = testProduct.getId();
 		Assert.isTrue(testProduct.getId() > 0);
 
-		testDao.delete(testProduct);
-		Product p = testDao.findById(id);
+		productDao.delete(testProduct);
+		Product p = productDao.findById(id);
 		Assert.isNull(p);
-
-		createdProducts.remove(testProduct);
 
 	}
 
@@ -182,11 +187,10 @@ public class TestProductDAO {
 		Product testProduct = new ProductImpl();
 		testProduct.setDescription(description1);
 
-		testDao.persist(testProduct);
-		createdProducts.add(testProduct);
+		productDao.persist(testProduct);
 
 		// initial persist
-		Product persistedProduct = testDao.findById(testProduct.getId());
+		Product persistedProduct = productDao.findById(testProduct.getId());
 		Assert.isTrue(persistedProduct.getId() == testProduct.getId());
 		Assert.isTrue(persistedProduct.getDescription().equals(description1));
 
@@ -195,13 +199,12 @@ public class TestProductDAO {
 		persistedProduct.setDescription(description2);
 
 		// update
-		testDao.update(persistedProduct);
+		productDao.update(persistedProduct);
 
-		Product persistedProduct2 = testDao.findById(persistedProduct.getId());
+		Product persistedProduct2 = productDao.findById(persistedProduct
+				.getId());
 		Assert.notNull(persistedProduct2);
 		Assert.isTrue(persistedProduct2.getDescription().equals(description2));
-
-		createdProducts.remove(testProduct);
 
 	}
 }

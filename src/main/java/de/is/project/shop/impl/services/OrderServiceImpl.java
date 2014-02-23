@@ -3,11 +3,9 @@ package de.is.project.shop.impl.services;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Scope;
 
 import de.is.project.shop.api.domain.BillOfDelivery;
@@ -26,10 +24,15 @@ import de.is.project.shop.impl.domain.VisitorImpl;
 
 @Named
 @Scope("prototype")
-public class OrderServiceImpl implements OrderService, ApplicationContextAware {
+public class OrderServiceImpl implements OrderService {
 
 	private Order order;
-	private ApplicationContext context = null;
+
+	@Inject
+	ProductDAO productDAO;
+
+	@Inject
+	OrderDAO orderDAO;
 
 	@Override
 	public void addProduct(Product product) {
@@ -98,8 +101,8 @@ public class OrderServiceImpl implements OrderService, ApplicationContextAware {
 			if (!this.order.getItems().isEmpty()) {
 				for (OrderItem item : this.order.getItems()) {
 					item.setStatus("In Process");
-					ProductDAO productDao = context.getBean(ProductDAO.class);
-					Product currentProduct = productDao.findById(item.getProduct().getId());
+					Product currentProduct = productDAO.findById(item
+							.getProduct().getId());
 					if (currentProduct.getStock() == 0) {
 						item.setReservedQuantity(0);
 					} else {
@@ -110,23 +113,15 @@ public class OrderServiceImpl implements OrderService, ApplicationContextAware {
 							item.setReservedQuantity(item.getQuantity());
 							currentProduct.setStock(item.getQuantity());
 						}
-						productDao.persist(currentProduct);
+						productDAO.persist(currentProduct);
 					}
 				}
 			}
 			this.order.setOrderDate(new Date());
-			OrderDAO orderDao = context.getBean(OrderDAO.class);
-			this.order = orderDao.persist(this.order);
+			this.order = orderDAO.persist(this.order);
 			return this.order;
 		}
 		return null;
-	}
-
-	@Override
-	public void setApplicationContext(ApplicationContext context)
-			throws BeansException {
-		this.context = context;
-
 	}
 
 	@Override
@@ -134,63 +129,62 @@ public class OrderServiceImpl implements OrderService, ApplicationContextAware {
 			Collection<OrderItem> orderItems) {
 		BillOfDelivery billOfDelivery = new BillOfDeliveryImpl();
 		billOfDelivery.setDeliveryDate(new Date());
-		for(OrderItem item : orderItems){
-			if(item.getOrder().getId() == this.order.getId()){
-				for(OrderItem theItem : this.order.getItems()){
-					if(theItem.getId() == item.getId()){
+		for (OrderItem item : orderItems) {
+			if (item.getOrder().getId() == this.order.getId()) {
+				for (OrderItem theItem : this.order.getItems()) {
+					if (theItem.getId() == item.getId()) {
 						billOfDelivery.getOrderItems().add(theItem);
 						theItem.setBillOfDelivery(billOfDelivery);
 					}
 				}
-			}else{
-				//Throw Exception?
+			} else {
+				// Throw Exception?
 			}
 		}
-		OrderDAO orderDao = context.getBean(OrderDAO.class);
-		this.order = orderDao.persist(this.order);
+		this.order = orderDAO.persist(this.order);
 		BillOfDelivery persistedBillOfDelivery = null;
-		for(OrderItem item : this.order.getItems()){
-			if(item.getBillOfDelivery().getDeliveryDate() == billOfDelivery.getDeliveryDate()){
+		for (OrderItem item : this.order.getItems()) {
+			if (item.getBillOfDelivery().getDeliveryDate() == billOfDelivery
+					.getDeliveryDate()) {
 				persistedBillOfDelivery = item.getBillOfDelivery();
 			}
 		}
-		
-		if(persistedBillOfDelivery == null){
+
+		if (persistedBillOfDelivery == null) {
 			return null;
-		}else{
+		} else {
 			return persistedBillOfDelivery;
 		}
-		
+
 	}
 
 	@Override
 	public Invoice createInvoiceForItems(Collection<OrderItem> orderItems) {
 		Invoice invoice = new InvoiceImpl();
 		invoice.setInvoiceDate(new Date());
-		for(OrderItem item : orderItems){
-			if(item.getOrder().getId() == this.order.getId()){
-				for(OrderItem theItem : this.order.getItems()){
-					if(theItem.getId() == item.getId()){
+		for (OrderItem item : orderItems) {
+			if (item.getOrder().getId() == this.order.getId()) {
+				for (OrderItem theItem : this.order.getItems()) {
+					if (theItem.getId() == item.getId()) {
 						invoice.getOrderItems().add(theItem);
 						theItem.setInvoice(invoice);
 					}
 				}
-			}else{
-				//Throw Exception?
+			} else {
+				// Throw Exception?
 			}
 		}
-		OrderDAO orderDao = context.getBean(OrderDAO.class);
-		this.order = orderDao.persist(this.order);
+		this.order = orderDAO.persist(this.order);
 		Invoice persistedInvoice = null;
-		for(OrderItem item : this.order.getItems()){
-			if(item.getInvoice().getInvoiceDate() == invoice.getInvoiceDate()){
+		for (OrderItem item : this.order.getItems()) {
+			if (item.getInvoice().getInvoiceDate() == invoice.getInvoiceDate()) {
 				persistedInvoice = item.getInvoice();
 			}
 		}
-		
-		if(persistedInvoice == null){
+
+		if (persistedInvoice == null) {
 			return null;
-		}else{
+		} else {
 			return persistedInvoice;
 		}
 	}

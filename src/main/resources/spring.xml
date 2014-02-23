@@ -8,7 +8,9 @@
 
 	<import resource="classpath*:hibernate.xml" />
 
-	<context:component-scan base-package="de.is.project" />
+	<context:component-scan base-package="de.is.project.shop.impl">
+	</context:component-scan>
+
 	<context:annotation-config />
 
 

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -37,7 +38,7 @@ public class ProductImpl extends AbstractEntity implements Product {
 	}
 
 	@Override
-	@OneToMany(targetEntity = CategoryImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true)
+	@OneToMany(targetEntity = CategoryImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.EAGER)
 	public Collection<Category> getCategories() {
 		return this.categories;
 	}
@@ -69,7 +70,7 @@ public class ProductImpl extends AbstractEntity implements Product {
 	}
 
 	@Override
-	@OneToOne(targetEntity = ProducerImpl.class, cascade = { CascadeType.ALL })
+	@OneToOne(targetEntity = ProducerImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public Producer getProducer() {
 		return this.producer;
 	}

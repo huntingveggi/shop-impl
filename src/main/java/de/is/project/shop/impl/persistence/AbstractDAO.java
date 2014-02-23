@@ -9,17 +9,9 @@ public class AbstractDAO {
 
 	@Inject
 	SessionFactory sessionFactory;
-	Session session;
 
 	protected Session getCurrentSession() {
-		if (this.session == null) {
-			this.session = sessionFactory.openSession();
-		}
-		return this.session;
-	}
-
-	protected void closeCurrentSession() {
-		this.session.close();
+		return sessionFactory.getCurrentSession();
 	}
 
 }
