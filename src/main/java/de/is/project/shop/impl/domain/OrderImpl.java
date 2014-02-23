@@ -18,7 +18,7 @@ import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Visitor;
 
 @Entity(name = "orders")
-public class OrderImpl extends AbstractEntity implements Order{
+public class OrderImpl extends AbstractEntity implements Order {
 
 	Collection<OrderItem> items = new LinkedList<>();;
 	Date orderDate;
@@ -28,6 +28,12 @@ public class OrderImpl extends AbstractEntity implements Order{
 	double discount;
 	String status;
 	double total;
+	String paymentTerm;
+	
+	@Override
+	public void accept(Visitor visitor) {
+		visitor.visit(this);
+	}
 
 	@Override
 	@ManyToOne(targetEntity = CustomerImpl.class, cascade = { CascadeType.ALL })
@@ -67,11 +73,17 @@ public class OrderImpl extends AbstractEntity implements Order{
 	}
 
 	@Override
+	@Column(name = "payment_term", nullable = false)
+	public String getPaymentTerm() {
+		return this.paymentTerm;
+	}
+
+	@Override
 	@Column(name = "status", nullable = false)
 	public String getStatus() {
 		return this.status;
 	}
-	
+
 	@Override
 	@Transient
 	public double getTotal() {
@@ -108,18 +120,19 @@ public class OrderImpl extends AbstractEntity implements Order{
 	}
 
 	@Override
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	@Override
-	public void setTotal(double total) {
-		this.total = total;
+	public void setPaymentTerm(String paymentTerm) {
+		this.paymentTerm=paymentTerm;
+
 	}
 
 	@Override
-	public void accept(Visitor visitor) {
-		visitor.visit(this);		
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Override
+	public void setTotal(double total) {
+		this.total = total;
 	}
 
 }
