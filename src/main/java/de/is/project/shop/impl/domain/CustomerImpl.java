@@ -57,8 +57,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 
 	@Override
 	public void setAddress(Address address) {
-		// TODO Auto-generated method stub
-
+		this.address=address;
 	}
 
 	@Override

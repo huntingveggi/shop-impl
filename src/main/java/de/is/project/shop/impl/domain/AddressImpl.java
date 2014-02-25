@@ -3,7 +3,6 @@ package de.is.project.shop.impl.domain;
 import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +31,7 @@ public class AddressImpl extends AbstractEntity implements Address {
 	}
 
 	@Override
-	@ManyToOne(targetEntity = CustomerImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = CustomerImpl.class, fetch = FetchType.EAGER, optional = false)
 	public Customer getCustomer() {
 		return this.customer;
 	}
