@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Order;
+import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.persistence.OrderDAO;
 import de.is.project.shop.impl.domain.OrderImpl;
 
