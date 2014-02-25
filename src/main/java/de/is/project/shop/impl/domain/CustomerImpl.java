@@ -3,6 +3,7 @@ package de.is.project.shop.impl.domain;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 import de.is.project.shop.api.domain.Address;
@@ -19,7 +20,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	boolean billingCustomer;
 
 	@Override
-	@OneToOne(targetEntity=AddressImpl.class, cascade = { CascadeType.ALL })
+	@OneToOne(targetEntity=AddressImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public Address getAddress() {
 		return this.address;
 	}

@@ -3,6 +3,7 @@ package de.is.project.shop.impl.domain;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
@@ -27,7 +28,7 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	Invoice invoice;
 
 	@Override
-	@ManyToOne(targetEntity=BillOfDeliveryImpl.class, cascade = { CascadeType.ALL })
+	@ManyToOne(targetEntity=BillOfDeliveryImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public BillOfDelivery getBillOfDelivery() {
 		// TODO Auto-generated method stub
 		return null;
@@ -40,13 +41,13 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
-	@ManyToOne(targetEntity=InvoiceImpl.class, cascade = { CascadeType.ALL })
+	@ManyToOne(targetEntity=InvoiceImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public Invoice getInvoice() {
 		return this.invoice;
 	}
 
 	@Override
-	@ManyToOne(targetEntity = OrderImpl.class, cascade = { CascadeType.ALL })
+	@ManyToOne(targetEntity = OrderImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public Order getOrder() {
 		return this.order;
 	}
@@ -58,7 +59,7 @@ public class OrderItemImpl extends AbstractEntity implements OrderItem {
 	}
 
 	@Override
-	@ManyToOne(targetEntity = ProductImpl.class, cascade = { CascadeType.ALL })
+	@ManyToOne(targetEntity = ProductImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public Product getProduct() {
 		return this.product;
 	}

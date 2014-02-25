@@ -2,6 +2,7 @@ package de.is.project.shop.impl.domain;
 
 import java.io.InputStream;
 
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
@@ -32,7 +33,7 @@ public class DocumentationImpl extends AbstractEntity implements Documentation {
 	}
 
 	@Override
-	@ManyToOne(targetEntity=RequestImpl.class)
+	@ManyToOne(targetEntity=RequestImpl.class, fetch = FetchType.EAGER)
 	public Request getRequest() {
 		return request;
 	}

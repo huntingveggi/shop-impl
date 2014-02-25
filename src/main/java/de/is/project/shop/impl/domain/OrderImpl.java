@@ -7,9 +7,13 @@ import java.util.LinkedList;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
@@ -36,13 +40,13 @@ public class OrderImpl extends AbstractEntity implements Order {
 	}
 
 	@Override
-	@ManyToOne(targetEntity = CustomerImpl.class, cascade = { CascadeType.ALL })
+	@ManyToOne(targetEntity = CustomerImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public Customer getCustomer() {
 		return this.customer;
 	}
 
 	@Override
-	@ManyToOne(targetEntity = AddressImpl.class, cascade = { CascadeType.ALL })
+	@ManyToOne(targetEntity = AddressImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public Address getDeliveryAddress() {
 		// TODO Auto-generated method stub
 		return this.deliveryAddress;
@@ -55,12 +59,13 @@ public class OrderImpl extends AbstractEntity implements Order {
 	}
 
 	@Override
-	@ManyToOne(targetEntity = AddressImpl.class, cascade = { CascadeType.ALL })
+	@ManyToOne(targetEntity = AddressImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public Address getInvoiceAddress() {
 		return this.invoiceAddress;
 	}
 
 	@Override
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(targetEntity = OrderItemImpl.class, cascade = { CascadeType.ALL })
 	public Collection<OrderItem> getItems() {
 		return this.items;

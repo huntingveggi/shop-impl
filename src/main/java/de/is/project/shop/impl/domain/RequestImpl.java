@@ -2,10 +2,15 @@ package de.is.project.shop.impl.domain;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
@@ -17,9 +22,9 @@ import de.is.project.shop.api.domain.RequestItem;
 public class RequestImpl extends AbstractEntity implements Request {
 
 	Customer customer;
-	Collection<RequestItem> items;
-	Collection<Message> messages;
-	Collection<Documentation> documentations;
+	Collection<RequestItem> items = new LinkedList<RequestItem>();
+	Collection<Message> messages = new LinkedList<Message>();
+	Collection<Documentation> documentations = new LinkedList<Documentation>();
 	Date requestDate;
 	Date deliveryDate;
 	Address deliveryAddress;
@@ -28,13 +33,13 @@ public class RequestImpl extends AbstractEntity implements Request {
 	double total;
 
 	@Override
-	@ManyToOne(targetEntity = CustomerImpl.class)
+	@ManyToOne(targetEntity = CustomerImpl.class, fetch = FetchType.EAGER)
 	public Customer getCustomer() {
 		return customer;
 	}
-
+	
 	@Override
-	@ManyToOne(targetEntity=AddressImpl.class)
+	@ManyToOne(targetEntity=AddressImpl.class, fetch = FetchType.EAGER)
 	public Address getDeliveryAddress() {
 		return deliveryAddress;
 	}
@@ -50,18 +55,22 @@ public class RequestImpl extends AbstractEntity implements Request {
 	}
 
 	@Override
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(targetEntity=DocumentationImpl.class)
 	public Collection<Documentation> getDocumentations() {
 		return documentations;
 	}
 
 	@Override
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(targetEntity=RequestItemImpl.class)
 	public Collection<RequestItem> getItems() {
 		return items;
 	}
 
 	@Override
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(targetEntity=MessageImpl.class)
 	public Collection<Message> getMessages() {
 		return messages;
 	}

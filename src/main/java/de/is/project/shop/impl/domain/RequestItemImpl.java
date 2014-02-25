@@ -1,5 +1,6 @@
 package de.is.project.shop.impl.domain;
 
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
@@ -27,7 +28,7 @@ public class RequestItemImpl extends AbstractEntity implements RequestItem {
 	}
 
 	@Override
-	@ManyToOne(targetEntity=ProductImpl.class)
+	@ManyToOne(targetEntity=ProductImpl.class, fetch = FetchType.EAGER)
 	public Product getProduct() {
 		return product;
 	}
@@ -38,7 +39,7 @@ public class RequestItemImpl extends AbstractEntity implements RequestItem {
 	}
 
 	@Override
-	@ManyToOne(targetEntity=RequestImpl.class)
+	@ManyToOne(targetEntity=RequestImpl.class, fetch = FetchType.EAGER)
 	public Request getRequest() {
 		return request;
 	}

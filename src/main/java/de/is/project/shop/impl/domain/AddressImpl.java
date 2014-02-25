@@ -6,6 +6,7 @@ import de.is.project.shop.api.domain.Customer;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "addresses")
@@ -31,7 +32,7 @@ public class AddressImpl extends AbstractEntity implements Address {
 	}
 
 	@Override
-	@ManyToOne(targetEntity = CustomerImpl.class, cascade = { CascadeType.ALL })
+	@ManyToOne(targetEntity = CustomerImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public Customer getCustomer() {
 		return this.customer;
 	}

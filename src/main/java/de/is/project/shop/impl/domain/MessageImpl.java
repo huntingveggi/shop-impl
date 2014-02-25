@@ -1,5 +1,6 @@
 package de.is.project.shop.impl.domain;
 
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 import de.is.project.shop.api.domain.Message;
@@ -13,7 +14,7 @@ public class MessageImpl extends AbstractEntity implements Message {
 	boolean isFromAdmin;
 
 	@Override
-	@ManyToOne(targetEntity = RequestImpl.class)
+	@ManyToOne(targetEntity = RequestImpl.class, fetch = FetchType.EAGER)
 	public Request getRequest() {
 		return request;
 	}

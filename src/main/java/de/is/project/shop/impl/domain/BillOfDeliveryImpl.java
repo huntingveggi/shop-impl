@@ -8,6 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import de.is.project.shop.api.domain.BillOfDelivery;
 import de.is.project.shop.api.domain.OrderItem;
 
@@ -19,6 +22,7 @@ public class BillOfDeliveryImpl extends AbstractEntity implements
 	Date deliveryDate;
 
 	@Override
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(targetEntity = OrderItemImpl.class)
 	public Collection<OrderItem> getOrderItems() {
 		return this.orderItems;
