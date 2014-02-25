@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.util.Assert;
 
 import de.is.project.shop.api.domain.Address;
@@ -30,6 +31,7 @@ import de.is.project.shop.impl.domain.ProductImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring.xml" })
+@TransactionConfiguration(defaultRollback = false)
 public class TestOrderDAO {
 
 	@Inject
@@ -55,7 +57,7 @@ public class TestOrderDAO {
 	public void testPersist() {
 
 		Order testOrder = createOrder();
-		Date testDate = testOrder.getOrderDate();
+		double testDiscount = testOrder.getDiscount();
 		testDao.persist(testOrder);
 
 		createdOrders.add(testOrder);
@@ -65,8 +67,7 @@ public class TestOrderDAO {
 		Assert.isTrue(testOrder.getId() > -1);
 		Assert.notNull(persistedOrder);
 		Assert.isTrue(persistedOrder.getId() == testOrder.getId());
-		Assert.isTrue(persistedOrder.getOrderDate().equals(testDate));
-		Assert.isTrue(testOrder == persistedOrder);
+		Assert.isTrue(persistedOrder.getDiscount() == testDiscount);
 
 	}
 
@@ -127,9 +128,9 @@ public class TestOrderDAO {
 		Order o = testDao.findById(testOrder.getId());
 		Assert.notNull(o);
 		Assert.isTrue(o.getId() == testOrder.getId());
-		Assert.isTrue(o.getCustomer().getFirstName() == customer.getFirstName());
-		Assert.isTrue(o.getDeliveryAddress().getStreet() == deliveryAddress.getStreet());
-		Assert.isTrue(o.getDeliveryAddress().getStreet() == deliveryAddress.getStreet());
+		Assert.isTrue(o.getCustomer().getFirstName().equals(customer.getFirstName()));
+		Assert.isTrue(o.getDeliveryAddress().getStreet().equals(deliveryAddress.getStreet()));
+		Assert.isTrue(o.getDeliveryAddress().getStreet().equals(deliveryAddress.getStreet()));
 
 	}
 	
@@ -176,8 +177,8 @@ public class TestOrderDAO {
 		item3.setReservedQuantity(1);
 		item3.setStatus("Delivered");
 		item3.setPrice(30.0);
-		persistedOrder.getItems().add(item3);
-		testDao.persist(persistedOrder);
+		testOrder.getItems().add(item3);
+		testDao.update(testOrder);
 
 		Order persistedOrder1 = testDao.findById(persistedOrder.getId());
 		Assert.isTrue(persistedOrder1.getItems().size() == 3);
