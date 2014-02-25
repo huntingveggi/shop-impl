@@ -31,7 +31,7 @@ public class AddressImpl extends AbstractEntity implements Address {
 	}
 
 	@Override
-	@ManyToOne(targetEntity = CustomerImpl.class, fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(targetEntity = CustomerImpl.class, fetch = FetchType.EAGER)
 	public Customer getCustomer() {
 		return this.customer;
 	}

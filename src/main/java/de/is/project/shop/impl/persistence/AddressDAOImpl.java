@@ -53,7 +53,8 @@ public class AddressDAOImpl extends AbstractDAO implements AddressDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(Address entity) {
 		Session session = getCurrentSession();
-		if(entity.getCustomer().getAddress().getId() == entity.getId()){
+		if(entity.getCustomer().getAddress() != null){
+			if(entity.getCustomer().getAddress().getId() == entity.getId())
 			entity.getCustomer().setAddress(null);
 			customerDAO.update(entity.getCustomer());
 		}

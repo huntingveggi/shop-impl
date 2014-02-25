@@ -20,6 +20,8 @@ import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
+import de.is.project.shop.api.persistence.AddressDAO;
+import de.is.project.shop.api.persistence.CustomerDAO;
 import de.is.project.shop.api.persistence.OrderDAO;
 import de.is.project.shop.impl.domain.AddressImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
@@ -36,6 +38,13 @@ public class TestOrderDAO {
 
 	@Inject
 	OrderDAO testDao;
+	
+	@Inject
+	AddressDAO addressDAO;
+	
+	@Inject
+	CustomerDAO customerDAO;
+	
 	Collection<Order> createdOrders = new LinkedList<Order>();
 	
 	
@@ -107,14 +116,18 @@ public class TestOrderDAO {
 	public void testPersistWithAddingCustomerAndAddresses() {
 		
 		Customer customer = createCustomer();
+		customerDAO.persist(customer);
 		
 		Address deliveryAddress = createAddress();
 		deliveryAddress.setCustomer(customer);
+		addressDAO.persist(deliveryAddress);
 		
 		Address invoiceAddress = createAddress();
 		invoiceAddress.setCustomer(customer);
+		addressDAO.persist(invoiceAddress);
 
 		customer.setAddress(deliveryAddress);
+		customerDAO.update(customer);
 		
 		Order testOrder = createOrder();
 		testOrder.setDeliveryAddress(deliveryAddress);
@@ -196,14 +209,18 @@ public class TestOrderDAO {
 	@Test
 	public void testFindByCustomer() {
 		Customer customer = createCustomer();
+		customerDAO.persist(customer);
 		
 		Address deliveryAddress = createAddress();
 		deliveryAddress.setCustomer(customer);
+		addressDAO.persist(deliveryAddress);
 		
 		Address invoiceAddress = createAddress();
 		invoiceAddress.setCustomer(customer);
+		addressDAO.persist(invoiceAddress);
 
 		customer.setAddress(deliveryAddress);
+		customerDAO.update(customer);
 		
 		Order testOrder = createOrder();
 		testOrder.setDeliveryAddress(deliveryAddress);
@@ -216,6 +233,7 @@ public class TestOrderDAO {
 		
 		Order o = testDao.findById(testOrder.getId());
 		
+		System.out.println("Customer id: "+o.getCustomer().getId());
 		Collection<Order> customersOrders = testDao.findByCustomer(o.getCustomer());
 		Assert.isTrue(customersOrders.isEmpty() == false);
 		
