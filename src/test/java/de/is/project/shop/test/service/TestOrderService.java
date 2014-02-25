@@ -1,5 +1,4 @@
-package de.is.project.shop.test;
-
+package de.is.project.shop.test.service;
 import javax.inject.Inject;
 
 import org.junit.Before;
@@ -24,26 +23,26 @@ import de.is.project.shop.impl.domain.ProductImpl;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring.xml" })
 public class TestOrderService {
-	
+
 	@Inject
 	private OrderService service;
-	
+
 	@Inject
 	private ProductDAO productDAO;
-	
+
 	@Before
 	public void setUp() {
-		
+
 		Order order = new OrderImpl();
 		Customer customer = createCustomer();
 		Address address = createAddress();
 		customer.setAddress(address);
 		order.setCustomer(customer);
 		order.setPaymentTerm(PaymentTerm.DEBIT_ADVICE.toString());
-		
+
 		service.setOrder(order);
 	}
-	
+
 	private Customer createCustomer(){
 		Customer customer = new CustomerImpl();
 		customer.setFirstName("Max");
@@ -51,10 +50,10 @@ public class TestOrderService {
 		customer.setSex("male");
 		customer.setTitle("Dr.");
 		customer.setBillingCustomer(false);
-		
+
 		return customer;
 	}
-	
+
 	private Address createAddress(){
 		Address address = new AddressImpl();
 		address.setStreet("Street");
@@ -64,55 +63,55 @@ public class TestOrderService {
 		address.setCity("City");
 		return address;
 	}
-	
+
 	@Test
 	public void testAddAndRemoveProduct() {
-		
+
 		Product product1 = createProdukt1();
 		service.addProduct(product1);
 		service.addProduct(product1);
 		Assert.isTrue(service.getOrder().getItems().size() == 1);
 		Assert.isTrue(service.getOrder().getTotal() == 20);
-		
+
 		Product product2 = createProdukt2();
 		service.addProduct(product2);
 		Assert.isTrue(service.getOrder().getItems().size() == 2);
 		Assert.isTrue(service.getOrder().getTotal() == 33);
-		
+
 		service.removeProduct(product1);
 		Assert.isTrue(service.getOrder().getItems().size() == 2);
 		Assert.isTrue(service.getOrder().getTotal() == 23);
-		
+
 		service.removeProduct(product1);
 		Assert.isTrue(service.getOrder().getItems().size() == 1);
 		Assert.isTrue(service.getOrder().getTotal() == 13);
-		
+
 		service.removeProduct(product2);
 		Assert.isTrue(service.getOrder().getItems().size() == 0);
 		Assert.isTrue(service.getOrder().getTotal() == 0);
-		
+
 		service.addProduct(product1);
 		Assert.isTrue(service.getOrder().getItems().size() == 1);
 		Assert.isTrue(service.getOrder().getTotal() == 10);
 	}
-	
+
 	@Test
 	public void testPlaceOrder(){
 		Product product1 = createProdukt1();
 		Product product2 = createProdukt2();
-		
+
 		productDAO.persist(product1);
 		productDAO.persist(product2);
-		
+
 		service.addProduct(product1);
 		service.addProduct(product1);
 		service.addProduct(product2);
-		
+
 		Order placedOrder= service.placeOrder();
 		Assert.isTrue(placedOrder.getId() > - 1);
-		
+
 	}
-	
+
 	public Product createProdukt1(){
 		Product product1 = new ProductImpl();
 		product1.setName("Kuehlschrank1");
@@ -121,7 +120,7 @@ public class TestOrderService {
 		product1.setPrice(10.0);
 		return product1;
 	}
-	
+
 	public Product createProdukt2(){
 		Product product2 = new ProductImpl();
 		product2.setName("Kuehlschrank2");

@@ -1,4 +1,4 @@
-package de.is.project.shop.test;
+package de.is.project.shop.test.persistence;
 
 import java.util.Collection;
 

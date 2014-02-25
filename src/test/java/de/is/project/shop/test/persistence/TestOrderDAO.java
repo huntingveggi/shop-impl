@@ -1,4 +1,4 @@
-package de.is.project.shop.test;
+package de.is.project.shop.test.persistence;
 
 import java.util.Collection;
 import java.util.Date;
@@ -63,7 +63,7 @@ public class TestOrderDAO {
 		createdOrders.add(testOrder);
 
 		Order persistedOrder = testDao.findById(testOrder.getId());
-
+		
 		Assert.isTrue(testOrder.getId() > -1);
 		Assert.notNull(persistedOrder);
 		Assert.isTrue(persistedOrder.getId() == testOrder.getId());

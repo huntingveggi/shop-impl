@@ -1,4 +1,4 @@
-package de.is.project.shop.test;
+package de.is.project.shop.test.service;
 
 import javax.inject.Inject;
 
