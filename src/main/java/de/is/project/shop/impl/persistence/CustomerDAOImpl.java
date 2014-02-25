@@ -2,27 +2,23 @@ package de.is.project.shop.impl.persistence;
 
 import java.util.Collection;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.persistence.CustomerDAO;
 import de.is.project.shop.impl.domain.CustomerImpl;
 
-@Named
-@Scope("prototype")
+@Repository
+@EnableTransactionManagement
 public class CustomerDAOImpl extends AbstractDAO implements CustomerDAO{
-
-	@Inject
-	SessionFactory sessionFactory;
-	Session session;
 	
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Customer persist(Customer customer) {
 		Session session = getCurrentSession();
 		org.hibernate.Transaction tx = session.beginTransaction();
@@ -32,6 +28,7 @@ public class CustomerDAOImpl extends AbstractDAO implements CustomerDAO{
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Customer update(Customer customer) {
 		Session session = getCurrentSession();
 		org.hibernate.Transaction tx = session.beginTransaction();
@@ -41,6 +38,7 @@ public class CustomerDAOImpl extends AbstractDAO implements CustomerDAO{
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(Customer customer) {
 		Session session = getCurrentSession();
 		org.hibernate.Transaction tx = session.beginTransaction();
@@ -49,12 +47,14 @@ public class CustomerDAOImpl extends AbstractDAO implements CustomerDAO{
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Collection<Address> getCustomersAddresses(Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Customer findById(int id) {
 		Session session = getCurrentSession();
 		Customer customer = (Customer) session.byId(CustomerImpl.class).load(id);

@@ -3,37 +3,32 @@ package de.is.project.shop.impl.persistence;
 import java.util.Collection;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.persistence.OrderDAO;
 import de.is.project.shop.impl.domain.OrderImpl;
 
-@Named
-@Scope("prototype")
+@Repository
+@EnableTransactionManagement
 public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
-
-	@Inject
-	SessionFactory sessionFactory;
-	Session session;
 	
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Order persist(Order entity) {
 		Session session = getCurrentSession();
-		org.hibernate.Transaction tx = session.beginTransaction();
 		session.save(entity);
-		tx.commit();
 		return entity;
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Order findById(int id) {
 		Session session = getCurrentSession();
 		Order order = (Order) session.byId(OrderImpl.class).load(id);
@@ -41,24 +36,22 @@ public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Order update(Order entity) {
 		Session session = getCurrentSession();
-		org.hibernate.Transaction tx = session.beginTransaction();
 		session.update(entity);
-		tx.commit();
 		return entity;
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(Order entity) {
 		Session session = getCurrentSession();
-		org.hibernate.Transaction tx = session.beginTransaction();
 		session.delete(entity);
-		tx.commit();
-
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Collection<Order> findByCustomer(Customer customer) {
 		Session session = getCurrentSession();
 		String sql = "FROM orders o WHERE o.customer = :customer";
