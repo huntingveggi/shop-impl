@@ -22,7 +22,7 @@ public class CustomerDAOImpl extends AbstractDAO implements CustomerDAO{
 	public Customer persist(Customer customer) {
 		Session session = getCurrentSession();
 		org.hibernate.Transaction tx = session.beginTransaction();
-		session.save(customer);
+		session.saveOrUpdate(customer);
 		tx.commit();
 		return customer;
 	}

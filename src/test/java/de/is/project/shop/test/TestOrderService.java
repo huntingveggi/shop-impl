@@ -18,6 +18,7 @@ import de.is.project.shop.api.services.OrderService;
 import de.is.project.shop.impl.domain.AddressImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
 import de.is.project.shop.impl.domain.OrderImpl;
+import de.is.project.shop.impl.domain.PaymentTerm;
 import de.is.project.shop.impl.domain.ProductImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -38,6 +39,7 @@ public class TestOrderService {
 		Address address = createAddress();
 		customer.setAddress(address);
 		order.setCustomer(customer);
+		order.setPaymentTerm(PaymentTerm.DEBIT_ADVICE.toString());
 		
 		service.setOrder(order);
 	}
@@ -64,7 +66,7 @@ public class TestOrderService {
 	}
 	
 	@Test
-	public void testAddProduct1() {
+	public void testAddAndRemoveProduct() {
 		
 		Product product1 = createProdukt1();
 		service.addProduct(product1);

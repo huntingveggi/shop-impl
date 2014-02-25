@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.is.project.shop.api.domain.BillOfDelivery;
 import de.is.project.shop.api.domain.Invoice;
@@ -20,6 +22,8 @@ import de.is.project.shop.api.services.OrderService;
 import de.is.project.shop.impl.domain.BillOfDeliveryImpl;
 import de.is.project.shop.impl.domain.InvoiceImpl;
 import de.is.project.shop.impl.domain.OrderItemImpl;
+import de.is.project.shop.impl.domain.OrderItemStatus;
+import de.is.project.shop.impl.domain.OrderStatus;
 import de.is.project.shop.impl.domain.VisitorImpl;
 
 @Named
@@ -30,7 +34,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Inject
 	ProductDAO productDAO;
-
 	@Inject
 	OrderDAO orderDAO;
 
@@ -95,27 +98,26 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Order placeOrder() {
-		this.order.setStatus("In Process");
 		if (this.order != null) {
-			if (!this.order.getItems().isEmpty()) {
-				for (OrderItem item : this.order.getItems()) {
-					item.setStatus("In Process");
-					Product currentProduct = productDAO.findById(item
-							.getProduct().getId());
-					if (currentProduct.getStock() == 0) {
-						item.setReservedQuantity(0);
+			this.order.setStatus(OrderStatus.IN_PROCESS.toString());
+			for (OrderItem item : this.order.getItems()) {
+				item.setStatus(OrderItemStatus.IN_PROCESS.toString());
+				Product currentProduct = productDAO.findById(item.getProduct().getId());
+				if (currentProduct.getStock() == 0) {
+					item.setReservedQuantity(0);
+				} else {
+					if (currentProduct.getStock() < item.getQuantity()) {
+						item.setReservedQuantity(currentProduct.getStock());
+						currentProduct.setStock(0);
 					} else {
-						if (currentProduct.getStock() < item.getQuantity()) {
-							item.setReservedQuantity(currentProduct.getStock());
-							currentProduct.setStock(0);
-						} else {
-							item.setReservedQuantity(item.getQuantity());
-							currentProduct.setStock(item.getQuantity());
-						}
-						productDAO.persist(currentProduct);
+						item.setReservedQuantity(item.getQuantity());
+						currentProduct.setStock(item.getQuantity());
 					}
+					productDAO.persist(currentProduct);
 				}
+				item.setProduct(currentProduct);
 			}
 			this.order.setOrderDate(new Date());
 			this.order = orderDAO.persist(this.order);
