@@ -1,4 +1,5 @@
 package de.is.project.shop.test.service;
+
 import javax.inject.Inject;
 
 import org.junit.Before;
@@ -6,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import de.is.project.shop.api.domain.Address;
@@ -29,6 +32,9 @@ public class TestOrderService {
 
 	@Inject
 	private ProductDAO productDAO;
+	
+	private Product product1;
+	private Product product2;
 
 	@Before
 	public void setUp() {
@@ -68,12 +74,14 @@ public class TestOrderService {
 	public void testAddAndRemoveProduct() {
 
 		Product product1 = createProdukt1();
+		product1.setId(1);
 		service.addProduct(product1);
 		service.addProduct(product1);
 		Assert.isTrue(service.getOrder().getItems().size() == 1);
 		Assert.isTrue(service.getOrder().getTotal() == 20);
 
 		Product product2 = createProdukt2();
+		product2.setId(2);
 		service.addProduct(product2);
 		Assert.isTrue(service.getOrder().getItems().size() == 2);
 		Assert.isTrue(service.getOrder().getTotal() == 33);
@@ -97,11 +105,7 @@ public class TestOrderService {
 
 	@Test
 	public void testPlaceOrder(){
-		Product product1 = createProdukt1();
-		Product product2 = createProdukt2();
-
-		productDAO.persist(product1);
-		productDAO.persist(product2);
+		createAndSaveProducts();
 
 		service.addProduct(product1);
 		service.addProduct(product1);
@@ -109,14 +113,32 @@ public class TestOrderService {
 
 		Order placedOrder= service.placeOrder();
 		Assert.isTrue(placedOrder.getId() > - 1);
-
+		
+		//deleteProducts();
 	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	private void createAndSaveProducts(){
+		product1 = createProdukt1();
+		product2 = createProdukt2();
+
+		product1 = productDAO.persist(product1);
+		product2 = productDAO.persist(product2);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	private void deleteProducts(){
+
+		productDAO.delete(product1);
+		productDAO.delete(product2);
+	}
+	
+	
 
 	public Product createProdukt1(){
 		Product product1 = new ProductImpl();
 		product1.setName("Kuehlschrank1");
 		product1.setDescription("Niedriger Verbrauch zum spitzen Preis");
-		product1.setId(1);
 		product1.setPrice(10.0);
 		return product1;
 	}
@@ -125,7 +147,6 @@ public class TestOrderService {
 		Product product2 = new ProductImpl();
 		product2.setName("Kuehlschrank2");
 		product2.setDescription("Niedriger Verbrauch zum spitzen Preis");
-		product2.setId(2);
 		product2.setPrice(13.0);
 		return product2;
 	}
