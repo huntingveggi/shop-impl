@@ -4,8 +4,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.LazyCollection;
@@ -21,8 +23,8 @@ public class InvoiceImpl extends AbstractEntity implements Invoice {
 	Collection<OrderItem> orderItems = new LinkedList<>();
 
 	@Override
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(targetEntity = OrderItemImpl.class)
+	//@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(targetEntity = OrderItemImpl.class, cascade = { CascadeType.ALL }, orphanRemoval=true, fetch = FetchType.LAZY)
 	public Collection<OrderItem> getOrderItems() {
 		return this.orderItems;
 	}

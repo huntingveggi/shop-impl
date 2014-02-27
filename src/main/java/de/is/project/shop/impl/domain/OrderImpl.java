@@ -40,13 +40,13 @@ public class OrderImpl extends AbstractEntity implements Order {
 	}
 
 	@Override
-	@ManyToOne(targetEntity = CustomerImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = CustomerImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	public Customer getCustomer() {
 		return this.customer;
 	}
 
 	@Override
-	@ManyToOne(targetEntity = AddressImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = AddressImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	public Address getDeliveryAddress() {
 		// TODO Auto-generated method stub
 		return this.deliveryAddress;
@@ -59,14 +59,14 @@ public class OrderImpl extends AbstractEntity implements Order {
 	}
 
 	@Override
-	@ManyToOne(targetEntity = AddressImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = AddressImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	public Address getInvoiceAddress() {
 		return this.invoiceAddress;
 	}
 
 	@Override
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(targetEntity = OrderItemImpl.class, cascade = { CascadeType.ALL })
+	//@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(targetEntity = OrderItemImpl.class, cascade = { CascadeType.ALL }, orphanRemoval=true, fetch = FetchType.LAZY)
 	public Collection<OrderItem> getItems() {
 		return this.items;
 	}
