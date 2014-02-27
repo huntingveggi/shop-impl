@@ -253,6 +253,9 @@ public class TestOrderDAO {
 		customer.setLastName("Mustermann");
 		customer.setSex("male");
 		customer.setTitle("Dr.");
+		customer.setActivationKey("1234");
+		customer.setEMail("lala@lulu.de");
+		customer.setPassword("geheim;-)");
 		customer.setBillingCustomer(false);
 		
 		return customer;
