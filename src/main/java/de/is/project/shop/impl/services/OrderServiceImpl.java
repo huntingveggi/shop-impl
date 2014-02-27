@@ -41,11 +41,16 @@ public class OrderServiceImpl implements OrderService {
 	public void addProduct(Product product) {
 		boolean found = false;
 
-		for (OrderItem item : this.order.getItems()) {
-			if (item.getProduct().getId() == product.getId()) {
-				item.setQuantity(item.getQuantity() + 1);
-				found = true;
-				break;
+		for (OrderItem item : this.order.getItems()){
+			if(product.getId() < 1){
+				IllegalArgumentException e = new IllegalArgumentException();
+				throw e;
+			}else{
+				if (item.getProduct().getId() == product.getId()) {
+					item.setQuantity(item.getQuantity() + 1);
+					found = true;
+					break;
+				}
 			}
 		}
 		if (!found) {
@@ -98,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Order placeOrder() {
 		if (this.order != null) {
 			this.order.setStatus(OrderStatus.IN_PROCESS.toString());

@@ -18,11 +18,26 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	String sex;
 	Address address;
 	boolean billingCustomer;
+	String activationKey;
+	String eMail;
+	String password;
 
 	@Override
-	@OneToOne(targetEntity=AddressImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@Column(name = "activation_key")
+	public String getActivationKey() {
+		return this.activationKey;
+	}
+
+	@Override
+	@OneToOne(targetEntity = AddressImpl.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	public Address getAddress() {
 		return this.address;
+	}
+
+	@Override
+	@Column(name = "email", nullable = false)
+	public String getEMail() {
+		return this.eMail;
 	}
 
 	@Override
@@ -35,6 +50,12 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	@Column(name = "last_name", nullable = false)
 	public String getLastName() {
 		return this.lastName;
+	}
+
+	@Override
+	@Column(name = "password", nullable = false)
+	public String getPassword() {
+		return this.password;
 	}
 
 	@Override
@@ -56,13 +77,23 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	}
 
 	@Override
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
+	}
+
+	@Override
 	public void setAddress(Address address) {
-		this.address=address;
+		this.address = address;
 	}
 
 	@Override
 	public void setBillingCustomer(boolean billingCustomer) {
 		this.billingCustomer = billingCustomer;
+	}
+
+	@Override
+	public void setEMail(String eMail) {
+		this.eMail=eMail;
 	}
 
 	@Override
@@ -73,6 +104,11 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	@Override
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	@Override
+	public void setPassword(String password) {
+		this.password=password;
 	}
 
 	@Override
