@@ -1,8 +1,11 @@
 package de.is.project.shop.impl.persistence;
 
 import java.util.Collection;
+import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,7 +18,7 @@ import de.is.project.shop.impl.domain.RequestImpl;
 
 @Repository
 @EnableTransactionManagement
-public class RequestDAOImpl extends AbstractDAO implements RequestDAO{
+public class RequestDAOImpl extends AbstractDAO implements RequestDAO {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -38,6 +41,7 @@ public class RequestDAOImpl extends AbstractDAO implements RequestDAO{
 	public void delete(Request entity) {
 		Session session = getCurrentSession();
 		session.delete(entity);
+		session.flush();
 	}
 
 	@Override
@@ -51,8 +55,12 @@ public class RequestDAOImpl extends AbstractDAO implements RequestDAO{
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Collection<Request> findByCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = getCurrentSession();
+		Criteria criteria = session.createCriteria(RequestImpl.class).add(
+				Restrictions.eq("customer", customer));
+		@SuppressWarnings("unchecked")
+		List<Request> requests = criteria.list();
+		return requests;
 	}
 
 }
