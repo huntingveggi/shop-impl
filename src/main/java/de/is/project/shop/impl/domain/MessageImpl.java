@@ -1,16 +1,29 @@
 package de.is.project.shop.impl.domain;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import de.is.project.shop.api.domain.Message;
 import de.is.project.shop.api.domain.Request;
 
+@Entity
+@Table(name = "messages")
 public class MessageImpl extends AbstractEntity implements Message {
 
+	@OneToMany(cascade = { CascadeType.ALL }, targetEntity = RequestImpl.class)
 	Request request;
+
+	@Column
 	String text;
+
 	boolean isRead;
+
+	@Column
 	boolean isFromAdmin;
 
 	@Override
@@ -30,6 +43,7 @@ public class MessageImpl extends AbstractEntity implements Message {
 	}
 
 	@Override
+	@Column(name = "isRead")
 	public boolean isRead() {
 		return isRead;
 	}

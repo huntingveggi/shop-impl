@@ -2,15 +2,20 @@ package de.is.project.shop.impl.domain;
 
 import java.io.InputStream;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import de.is.project.shop.api.domain.Documentation;
 import de.is.project.shop.api.domain.Request;
 
+@Entity
 public class DocumentationImpl extends AbstractEntity implements Documentation {
 
+	@OneToMany(cascade = { CascadeType.ALL }, targetEntity = RequestImpl.class)
 	Request request;
 	String name;
 	String description;
@@ -33,7 +38,7 @@ public class DocumentationImpl extends AbstractEntity implements Documentation {
 	}
 
 	@Override
-	@ManyToOne(targetEntity=RequestImpl.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = RequestImpl.class, fetch = FetchType.EAGER)
 	public Request getRequest() {
 		return request;
 	}
