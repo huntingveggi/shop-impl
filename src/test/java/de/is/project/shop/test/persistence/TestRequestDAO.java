@@ -12,27 +12,28 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.util.Assert;
 
 import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
-import de.is.project.shop.api.domain.Request;
 import de.is.project.shop.api.domain.Request;
 import de.is.project.shop.api.persistence.RequestDAO;
 import de.is.project.shop.impl.domain.AddressImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
 import de.is.project.shop.impl.domain.RequestImpl;
 import de.is.project.shop.impl.domain.RequestStatus;
-import de.is.project.shop.impl.domain.PaymentTerm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring.xml" })
+@TransactionConfiguration(defaultRollback = true)
 public class TestRequestDAO {
-	
+
 	@Inject
 	RequestDAO testDao;
+
 	Collection<Request> createdRequests = new LinkedList<Request>();
-	
+
 	@Before
 	public void setUp() {
 	}
@@ -46,7 +47,7 @@ public class TestRequestDAO {
 			}
 		}
 	}
-	
+
 	@Test
 	public void testPersist() {
 
@@ -78,7 +79,7 @@ public class TestRequestDAO {
 		Assert.notNull(o);
 		Assert.isTrue(o.getId() == testRequest.getId());
 	}
-	
+
 	@Test
 	public void testDelete() {
 
@@ -97,19 +98,19 @@ public class TestRequestDAO {
 		createdRequests.remove(testRequest);
 
 	}
-	
-	private Customer createCustomer(){
+
+	private Customer createCustomer() {
 		Customer customer = new CustomerImpl();
 		customer.setFirstName("Max");
 		customer.setLastName("Mustermann");
 		customer.setSex("male");
 		customer.setTitle("Dr.");
 		customer.setBillingCustomer(false);
-		
+
 		return customer;
 	}
-	
-	private Address createAddress(){
+
+	private Address createAddress() {
 		Address address = new AddressImpl();
 		address.setStreet("Street");
 		address.setStreetNumber("1b");
@@ -118,8 +119,8 @@ public class TestRequestDAO {
 		address.setCity("City");
 		return address;
 	}
-	
-	private Request createRequest(){
+
+	private Request createRequest() {
 		Request request = new RequestImpl();
 		Date testDate = new Date();
 		request.setRequestDate(testDate);
