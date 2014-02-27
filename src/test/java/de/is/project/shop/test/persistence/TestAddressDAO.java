@@ -183,6 +183,7 @@ public class TestAddressDAO {
 		customer.setActivationKey("1234");
 		customer.setEMail("lala@lulu.de");
 		customer.setPassword("geheim;-)");
+		customer.setActive(false);
 		customer.setBillingCustomer(false);
 		return customer;
 	}

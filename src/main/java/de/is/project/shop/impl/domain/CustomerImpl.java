@@ -21,6 +21,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	String activationKey;
 	String eMail;
 	String password;
+	boolean active;
 
 	@Override
 	@Column(name = "activation_key")
@@ -71,6 +72,12 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	}
 
 	@Override
+	@Column(name = "active", nullable = false)
+	public boolean isActive() {
+		return active;
+	}
+
+	@Override
 	@Column(name = "billing_customer", nullable = false)
 	public boolean isBillingCustomer() {
 		return this.billingCustomer;
@@ -79,6 +86,11 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	@Override
 	public void setActivationKey(String activationKey) {
 		this.activationKey = activationKey;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	@Override
@@ -93,7 +105,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 
 	@Override
 	public void setEMail(String eMail) {
-		this.eMail=eMail;
+		this.eMail = eMail;
 	}
 
 	@Override
@@ -108,7 +120,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 
 	@Override
 	public void setPassword(String password) {
-		this.password=password;
+		this.password = password;
 	}
 
 	@Override
