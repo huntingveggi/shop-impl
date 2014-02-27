@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import de.is.project.shop.api.domain.Address;
@@ -148,6 +150,7 @@ public class TestOrderDAO {
 	}
 	
 	@Test
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void testPersistWithAddingOrderItems() {
 		
 		Product product1 = new ProductImpl();
