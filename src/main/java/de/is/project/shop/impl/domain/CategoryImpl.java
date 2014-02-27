@@ -5,10 +5,13 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import de.is.project.shop.api.domain.Category;
 
 @Entity(name = "categories")
+@XmlRootElement(name = "category")
 public class CategoryImpl extends AbstractEntity implements Category {
 
 	private String name;
@@ -22,6 +25,7 @@ public class CategoryImpl extends AbstractEntity implements Category {
 
 	@Override
 	@Transient
+	@XmlTransient
 	public Collection<Category> getSubCategories() {
 		// TODO Auto-generated method stub
 		return null;
@@ -29,6 +33,7 @@ public class CategoryImpl extends AbstractEntity implements Category {
 
 	@Override
 	@Transient
+	@XmlTransient
 	public Category getSuperiorCategory() {
 		// TODO Auto-generated method stub
 		return null;

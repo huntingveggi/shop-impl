@@ -10,6 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import de.is.project.shop.api.domain.Attribute;
 import de.is.project.shop.api.domain.Category;
@@ -17,11 +22,21 @@ import de.is.project.shop.api.domain.Producer;
 import de.is.project.shop.api.domain.Product;
 
 @Entity(name = "products")
+@XmlRootElement(name = "product")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProductImpl extends AbstractEntity implements Product {
 
+	@XmlElement(name = "producer", type = ProducerImpl.class)
 	private Producer producer;
-	private Collection<Category> categories = new LinkedList<>();
-	private Collection<Attribute> attributes = new LinkedList<>();
+
+	@XmlElementWrapper(name = "categories")
+	@XmlElement(name = "category", type = CategoryImpl.class)
+	private Collection<Category> categories = new LinkedList<Category>();
+
+	@XmlElementWrapper(name = "attributes")
+	@XmlElement(name = "attribute", type = AttributeImpl.class)
+	private Collection<Attribute> attributes = new LinkedList<Attribute>();
+
 	private String name;
 	private String description;
 	private double price;
