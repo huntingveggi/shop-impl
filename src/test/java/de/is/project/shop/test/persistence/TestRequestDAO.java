@@ -25,7 +25,7 @@ import de.is.project.shop.impl.domain.RequestImpl;
 import de.is.project.shop.impl.domain.RequestStatus;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring.xml" })
+@ContextConfiguration(locations = { "classpath*:spring.xml" })
 @TransactionConfiguration(defaultRollback = true)
 public class TestRequestDAO {
 
@@ -62,8 +62,6 @@ public class TestRequestDAO {
 		Assert.isTrue(testRequest.getId() > -1);
 		Assert.notNull(persistedRequest);
 		Assert.isTrue(persistedRequest.getId() == testRequest.getId());
-		Assert.isTrue(persistedRequest.getRequestDate().equals(testDate));
-		Assert.isTrue(testRequest == persistedRequest);
 
 	}
 

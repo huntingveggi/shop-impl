@@ -5,10 +5,14 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -20,6 +24,8 @@ import de.is.project.shop.api.domain.Message;
 import de.is.project.shop.api.domain.Request;
 import de.is.project.shop.api.domain.RequestItem;
 
+@Entity
+@Table(name = "requests")
 public class RequestImpl extends AbstractEntity implements Request {
 
 	Customer customer;
@@ -38,56 +44,58 @@ public class RequestImpl extends AbstractEntity implements Request {
 	public Customer getCustomer() {
 		return customer;
 	}
-	
+
 	@Override
-	@ManyToOne(targetEntity=AddressImpl.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = AddressImpl.class, fetch = FetchType.EAGER)
 	public Address getDeliveryAddress() {
 		return deliveryAddress;
 	}
 
 	@Override
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
 
 	@Override
+	@Column
 	public double getDiscount() {
 		return discount;
 	}
 
 	@Override
-	//@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(targetEntity=DocumentationImpl.class, cascade = { CascadeType.ALL }, orphanRemoval=true, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = DocumentationImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
 	public Collection<Documentation> getDocumentations() {
 		return documentations;
 	}
 
 	@Override
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(targetEntity=RequestItemImpl.class)
+	@OneToMany(targetEntity = RequestItemImpl.class)
 	public Collection<RequestItem> getItems() {
 		return items;
 	}
 
 	@Override
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(targetEntity=MessageImpl.class)
+	@OneToMany(targetEntity = MessageImpl.class)
 	public Collection<Message> getMessages() {
 		return messages;
 	}
 
 	@Override
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getRequestDate() {
 		return requestDate;
 	}
 
 	@Override
+	@Column
 	public String getStatus() {
 		return status;
 	}
 
 	@Override
-	@Transient
 	public double getTotal() {
 		return total;
 	}

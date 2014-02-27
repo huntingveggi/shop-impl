@@ -48,8 +48,9 @@ public class RequestDAOImpl extends AbstractDAO implements RequestDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Request findById(int id) {
 		Session session = getCurrentSession();
-		Request request = (Request) session.byId(RequestImpl.class).load(id);
-		return request;
+		Criteria criteria = session.createCriteria(RequestImpl.class).add(
+				Restrictions.eq("id", id));
+		return (RequestImpl) criteria.uniqueResult();
 	}
 
 	@Override
