@@ -26,7 +26,7 @@ import de.is.project.shop.impl.domain.CategoryImpl;
 import de.is.project.shop.impl.domain.ProductImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring.xml" })
+@ContextConfiguration(locations = { "classpath*:spring.xml" })
 @TransactionConfiguration(defaultRollback = false)
 public class TestProductDAO {
 
@@ -34,17 +34,8 @@ public class TestProductDAO {
 	ProductDAO productDao;
 
 	@BeforeClass
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public static void setUpBeforeClass() {
-		String[] config = TestProductDAO.class.getAnnotation(
-				ContextConfiguration.class).locations();
-		ApplicationContext context = new ClassPathXmlApplicationContext(config);
-		((ConfigurableApplicationContext) context).registerShutdownHook();
-		ProductDAO productDAO = context.getBean(ProductDAO.class);
-		Collection<Product> products = productDAO.findAll();
-		for (Product product : products) {
-			productDAO.delete(product);
-		}
+
 	}
 
 	@Before
@@ -54,6 +45,19 @@ public class TestProductDAO {
 	@After
 	public void tearDown() {
 
+	}
+
+	public static void tearDownAfterClass() {
+
+		String[] config = TestProductDAO.class.getAnnotation(
+				ContextConfiguration.class).locations();
+		ApplicationContext context = new ClassPathXmlApplicationContext(config);
+		((ConfigurableApplicationContext) context).registerShutdownHook();
+		ProductDAO productDao = context.getBean(ProductDAO.class);
+		Collection<Product> products = productDao.findAll();
+		for (Product product : products) {
+			productDao.delete(product);
+		}
 	}
 
 	@Test
@@ -164,6 +168,7 @@ public class TestProductDAO {
 	}
 
 	@Test
+	
 	public void testDelete() {
 
 		Product testProduct = new ProductImpl();

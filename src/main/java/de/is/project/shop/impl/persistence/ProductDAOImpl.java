@@ -82,7 +82,7 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Product update(Product product) {
 		Session session = getCurrentSession();
-		session.update(product);
+		session.saveOrUpdate(product);
 		return product;
 	}
 
@@ -98,6 +98,7 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	public void delete(Product product) {
 		Session session = getCurrentSession();
 		session.delete(product);
+		session.flush();
 	}
 
 	/*

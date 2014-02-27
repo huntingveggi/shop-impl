@@ -11,11 +11,11 @@ import de.is.project.shop.api.domain.*;
 @MappedSuperclass
 public abstract class AbstractEntity implements Entity {
 
-	int id = -1;
+	int id;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", nullable = false, unique = true)
+	@Column(name = "id")
 	public int getId() {
 		return id;
 	}
