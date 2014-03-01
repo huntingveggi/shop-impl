@@ -1,7 +1,10 @@
 package de.is.project.shop.test.persistence;
 
+import java.util.Collection;
+
 import javax.inject.Inject;
 
+import org.hibernate.cfg.CreateKeySecondPass;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -162,7 +165,30 @@ public class TestProductDAO {
 	}
 
 	@Test
+	public void testGetCurrentOffers() {
+		String description1 = "Testme";
+		Product testProduct = new ProductImpl();
+		testProduct.setDescription(description1);
+		testProduct.setMeasurand("Meter");
+		testProduct.setName("prod1");
+		testProduct.setPrice(12.00);
+		testProduct.setSpecialOffer(true);
+		
+		productDao.persist(testProduct);
+		
+		Collection<Product> offers = productDao.getCurrentOffers();
+		Assert.isTrue(offers.size()>0);
+		boolean found = false;
+		for(Product prod : offers){
+			if(prod.getId() == testProduct.getId()){
+				found = true;
+			}
+		}
+		
+		Assert.isTrue(found);
+	}
 	
+	@Test
 	public void testDelete() {
 
 		Product testProduct = new ProductImpl();

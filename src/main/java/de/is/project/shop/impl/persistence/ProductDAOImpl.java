@@ -143,7 +143,7 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Collection<Product> getCurrentOffers() {
 		return getCurrentSession().createCriteria(ProductImpl.class)
-				.add(Restrictions.eq("isSpecialOffer", true)).list();
+				.add(Restrictions.eq("specialOffer", true)).list();
 	}
 	
 	@Override
