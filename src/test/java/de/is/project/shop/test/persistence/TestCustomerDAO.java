@@ -26,35 +26,35 @@ import de.is.project.shop.impl.utils.ActivationKeyUtil;
 @ContextConfiguration(locations = { "classpath:spring.xml" })
 @TransactionConfiguration(defaultRollback = true)
 public class TestCustomerDAO {
-	
+
 	@Inject
 	CustomerDAO testDao;
 	@Inject
 	AddressDAO addressDAO;
 	Collection<Customer> createdCustomers = new LinkedList<Customer>();
-	Collection<Address> createdAddresses = new LinkedList<Address>();	
-	
+	Collection<Address> createdAddresses = new LinkedList<Address>();
+
 	@Before
 	public void setUp() {
 	}
-	
+
 	@After
-	public void tearDown(){
-		//delete all created customers
-		for(Address a : createdAddresses){
+	public void tearDown() {
+		// delete all created customers
+		for (Address a : createdAddresses) {
 			Address testA = addressDAO.findById(a.getId());
 			addressDAO.delete(testA);
 		}
-		for(Customer c : createdCustomers){
+		for (Customer c : createdCustomers) {
 			Customer testC = testDao.findById(c.getId());
 			testDao.delete(testC);
 		}
 	}
-	
+
 	@Test
 	public void testPersist() {
-		
-		//Initial persist
+
+		// Initial persist
 		Customer testCustomer = createCustomer();
 		String testFirstName = testCustomer.getFirstName();
 		Address testAddress = createAddress();
@@ -62,7 +62,7 @@ public class TestCustomerDAO {
 		testDao.persist(testCustomer);
 		addressDAO.persist(testAddress);
 		createdAddresses.add(testAddress);
-		
+
 		createdCustomers.add(testCustomer);
 
 		Customer persistedCustomer = testDao.findById(testCustomer.getId());
@@ -71,15 +71,16 @@ public class TestCustomerDAO {
 		Assert.notNull(persistedCustomer);
 		Assert.isTrue(persistedCustomer.getId() == testCustomer.getId());
 		Assert.isTrue(persistedCustomer.getFirstName().equals(testFirstName));
-		
+
 		testCustomer.setAddress(testAddress);
-		
-		//Update Address
+
+		// Update Address
 		testDao.update(testCustomer);
 		persistedCustomer = testDao.findById(testCustomer.getId());
-		Assert.isTrue(persistedCustomer.getAddress().getId() == testCustomer.getAddress().getId());
+		Assert.isTrue(persistedCustomer.getAddress().getId() == testCustomer
+				.getAddress().getId());
 	}
-	
+
 	@Test
 	public void testFindById() {
 		Customer testCustomer = createCustomer();
@@ -92,7 +93,7 @@ public class TestCustomerDAO {
 		Assert.notNull(o);
 		Assert.isTrue(o.getId() == testCustomer.getId());
 	}
-	
+
 	@Test
 	public void testDelete() {
 
@@ -111,7 +112,7 @@ public class TestCustomerDAO {
 		createdCustomers.remove(testCustomer);
 
 	}
-	
+
 	@Test
 	public void testUpdate() {
 
@@ -119,11 +120,12 @@ public class TestCustomerDAO {
 
 		testDao.persist(testCustomer);
 		createdCustomers.add(testCustomer);
-		
+
 		// initial persist
 		Customer persistedCustomer = testDao.findById(testCustomer.getId());
 		Assert.isTrue(persistedCustomer.getId() == testCustomer.getId());
-		Assert.isTrue(persistedCustomer.getFirstName().equals(testCustomer.getFirstName()));
+		Assert.isTrue(persistedCustomer.getFirstName().equals(
+				testCustomer.getFirstName()));
 
 		// set new first name and update
 		testCustomer.setFirstName("Ralf");
@@ -133,21 +135,24 @@ public class TestCustomerDAO {
 
 		Customer persistedCustomer2 = testDao.findById(testCustomer.getId());
 		Assert.notNull(persistedCustomer2);
-		Assert.isTrue(persistedCustomer2.getFirstName().equals(testCustomer.getFirstName()));
+		Assert.isTrue(persistedCustomer2.getFirstName().equals(
+				testCustomer.getFirstName()));
 
 	}
-	
+
 	@Test
 	public void testFindByActivationKey() {
 		Customer customer = createCustomer();
-		customer.setActivationKey("1234");
+		String key = customer.getActivationKey();
+		customer.setActivationKey(key);
 		testDao.persist(customer);
-		
-		Customer persistedCustomer = testDao.findByActivationKey(customer.getActivationKey());
+
+		Customer persistedCustomer = testDao.findByActivationKey(customer
+				.getActivationKey());
 		Assert.isTrue(persistedCustomer != null);
 	}
-	
-	private Customer createCustomer(){
+
+	private Customer createCustomer() {
 		Customer customer = new CustomerImpl();
 		customer.setFirstName("Max");
 		customer.setLastName("Mustermann");
@@ -158,11 +163,11 @@ public class TestCustomerDAO {
 		customer.setPassword("geheim;-)");
 		customer.setActive(false);
 		customer.setBillingCustomer(false);
-		
+
 		return customer;
 	}
-	
-	private Address createAddress(){
+
+	private Address createAddress() {
 		Address address = new AddressImpl();
 		address.setStreet("Street");
 		address.setStreetNumber("1b");
