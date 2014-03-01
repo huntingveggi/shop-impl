@@ -15,6 +15,7 @@ import de.is.project.shop.api.domain.Invoice;
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
+import de.is.project.shop.api.domain.ShoppingCart;
 import de.is.project.shop.api.domain.Visitor;
 import de.is.project.shop.api.persistence.OrderDAO;
 import de.is.project.shop.api.persistence.ProductDAO;
@@ -194,6 +195,12 @@ public class OrderServiceImpl implements OrderService {
 		} else {
 			return persistedInvoice;
 		}
+	}
+
+	@Override
+	public Order createOrderfromShoppingCart(ShoppingCart shoppingCart) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
