@@ -2,6 +2,8 @@ package de.is.project.shop.impl.persistence;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -142,8 +144,9 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Collection<Product> getCurrentOffers() {
-		return getCurrentSession().createCriteria(ProductImpl.class)
+		List<Product> offers = getCurrentSession().createCriteria(ProductImpl.class)
 				.add(Restrictions.eq("specialOffer", true)).list();
+		return offers;
 	}
 	
 	@Override
