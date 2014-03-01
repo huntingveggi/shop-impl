@@ -16,15 +16,18 @@ import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
+import de.is.project.shop.api.domain.Request;
 import de.is.project.shop.api.domain.ShoppingCart;
 import de.is.project.shop.api.persistence.ProductDAO;
 import de.is.project.shop.api.services.OrderService;
+import de.is.project.shop.api.services.RequestService;
 import de.is.project.shop.api.services.ShoppingCartService;
 import de.is.project.shop.impl.domain.AddressImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
 import de.is.project.shop.impl.domain.OrderImpl;
 import de.is.project.shop.impl.domain.PaymentTerm;
 import de.is.project.shop.impl.domain.ProductImpl;
+import de.is.project.shop.impl.domain.RequestImpl;
 import de.is.project.shop.impl.domain.ShoppingCartImpl;
 import de.is.project.shop.impl.utils.ActivationKeyUtil;
 
@@ -37,6 +40,9 @@ public class TestOrderService {
 	
 	@Inject
 	private ShoppingCartService scs;
+
+	@Inject
+	private RequestService rservice;
 
 	@Inject
 	private ProductDAO productDAO;
@@ -56,7 +62,7 @@ public class TestOrderService {
 
 		service.setOrder(order);
 	}
-
+	
 	private Customer createCustomer() {
 		Customer customer = new CustomerImpl();
 		customer.setFirstName("Max");
@@ -153,6 +159,31 @@ public class TestOrderService {
 		}
 	}
 
+	@Test
+	public void testCreateOrderfromRequest() {
+		setUp();
+		Request request = new RequestImpl();
+		rservice.setRequest(request);
+		createAndSaveProducts();
+		rservice.addProduct(product1);
+		rservice.addProduct(product1);
+		rservice.addProduct(product1);
+		rservice.addProduct(product1);
+		rservice.addProduct(product2);
+		double newPrice = 5.0;
+		product1.setPrice(newPrice);
+		productDAO.update(product1);
+		service.createOrderfromRequest(rservice.getRequest());
+		Assert.isTrue(service.getOrder().getItems().size() == rservice
+				.getRequest().getItems().size());
+		Assert.isTrue(service.getOrder().getTotal() == 33);
+		for (OrderItem item : service.getOrder().getItems()) {
+			if (item.getProduct().getId() == product1.getId())
+				Assert.isTrue(item.getQuantity() == 4);
+		}
+	}
+
+	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	private void createAndSaveProducts() {
 		product1 = createProdukt1();
