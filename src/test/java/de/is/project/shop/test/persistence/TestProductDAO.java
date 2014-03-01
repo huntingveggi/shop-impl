@@ -6,10 +6,14 @@ import java.util.LinkedList;
 import javax.inject.Inject;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -45,26 +49,26 @@ public class TestProductDAO {
 
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
+	@AfterClass
 	public static void tearDownAfterClass() {
-
-		// String[] config = TestProductDAO.class.getAnnotation(
-		// ContextConfiguration.class).locations();
-		// ApplicationContext context = new
-		// ClassPathXmlApplicationContext(config);
-		// ((ConfigurableApplicationContext) context).registerShutdownHook();
-		// ProductDAO productDao = context.getBean(ProductDAO.class);
-		// Collection<Product> products = productDao.findAll();
-		// for (Product product : products) {
-		// productDao.delete(product);
-		// }
+		String[] config = TestProductDAO.class.getAnnotation(
+				ContextConfiguration.class).locations();
+		ApplicationContext context = new ClassPathXmlApplicationContext(config);
+		((ConfigurableApplicationContext) context).registerShutdownHook();
+		ProductDAO productDao = context.getBean(ProductDAO.class);
+		Collection<Product> products = productDao.findAll();
+		for (Product product : products) {
+			productDao.delete(product);
+		}
 	}
-	
+
 	@Test
-	public void tetPersistTenProducts(){
-		
+	public void tetPersistTenProducts() {
+
 		Collection<Product> products = new LinkedList<Product>();
-		
-		for(int i = 0; i<10; i++){
+
+		for (int i = 0; i < 10; i++) {
 			CategoryImpl category1 = new CategoryImpl();
 			category1.setName("Category1");
 			CategoryImpl category2 = new CategoryImpl();
@@ -74,20 +78,20 @@ public class TestProductDAO {
 			testProduct.setDescription("Testme");
 			testProduct.getCategories().add(category1);
 			testProduct.getCategories().add(category2);
-			
+
 			productDao.persist(testProduct);
 			products.add(testProduct);
 		}
-		
-		for(Product product:products){
+
+		for (Product product : products) {
 			Product persistedProduct = productDao.findById(product.getId());
 			Assert.isTrue(persistedProduct != null);
-			Assert.isTrue(persistedProduct.getId()>0);
+			Assert.isTrue(persistedProduct.getId() > 0);
 		}
 	}
 
 	@Test
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void testPersist() {
 
 		CategoryImpl category1 = new CategoryImpl();
@@ -114,7 +118,7 @@ public class TestProductDAO {
 	}
 
 	@Test
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void testPersistWithAddingCategories() {
 
 		CategoryImpl category1 = new CategoryImpl();
@@ -196,7 +200,6 @@ public class TestProductDAO {
 	}
 
 	@Test
-	
 	public void testDelete() {
 
 		Product testProduct = new ProductImpl();
@@ -214,7 +217,7 @@ public class TestProductDAO {
 	}
 
 	@Test
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void testUpdate() {
 
 		String description1 = "Testme";
