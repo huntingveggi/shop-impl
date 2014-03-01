@@ -51,7 +51,7 @@ public class CustomerDAOImpl extends AbstractDAO implements CustomerDAO{
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Customer findByActivationKey(String activationKey){
 		
-		return (Customer) getCurrentSession().createCriteria(ProductImpl.class)
+		return (Customer) getCurrentSession().createCriteria(CustomerImpl.class)
 				.add(Restrictions.eq("activationKey", activationKey)).uniqueResult();
 	}
 

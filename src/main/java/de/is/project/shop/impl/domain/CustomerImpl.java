@@ -24,7 +24,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	boolean active;
 
 	@Override
-	@Column(name = "activation_key")
+	@Column(name = "activation_key", unique=true)
 	public String getActivationKey() {
 		return this.activationKey;
 	}
