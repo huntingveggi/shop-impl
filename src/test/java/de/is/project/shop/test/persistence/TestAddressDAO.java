@@ -36,7 +36,7 @@ public class TestAddressDAO {
 	Collection<Customer> createdCustomers = new LinkedList<Customer>();
 	
 	@Before
-	public void setUp() {
+	public void setUp() {	
 	}
 	
 	@After

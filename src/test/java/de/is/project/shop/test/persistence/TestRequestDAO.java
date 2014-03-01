@@ -13,14 +13,21 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
+import de.is.project.shop.api.domain.Documentation;
+import de.is.project.shop.api.domain.Message;
 import de.is.project.shop.api.domain.Request;
+import de.is.project.shop.api.persistence.CustomerDAO;
 import de.is.project.shop.api.persistence.RequestDAO;
 import de.is.project.shop.impl.domain.AddressImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
+import de.is.project.shop.impl.domain.DocumentationImpl;
+import de.is.project.shop.impl.domain.MessageImpl;
 import de.is.project.shop.impl.domain.RequestImpl;
 import de.is.project.shop.impl.domain.RequestStatus;
 import de.is.project.shop.impl.utils.ActivationKeyUtil;
@@ -32,6 +39,8 @@ public class TestRequestDAO {
 
 	@Inject
 	RequestDAO testDao;
+	@Inject
+	CustomerDAO customerDAO;
 
 	Collection<Request> createdRequests = new LinkedList<Request>();
 
@@ -53,7 +62,6 @@ public class TestRequestDAO {
 	public void testPersist() {
 
 		Request testRequest = createRequest();
-		Date testDate = testRequest.getRequestDate();
 		testDao.persist(testRequest);
 
 		createdRequests.add(testRequest);
@@ -97,7 +105,99 @@ public class TestRequestDAO {
 		createdRequests.remove(testRequest);
 
 	}
+	
+	@Test
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public void testPersistWithAddingMessages() {
 
+		Customer customer = createCustomer();
+		customerDAO.persist(customer);
+		
+		Request testRequest = createRequest();
+		testRequest.setCustomer(customer);
+		testDao.persist(testRequest);
+		
+		Message message=new MessageImpl();
+		message.setText("Hallo");
+		message.setRead(false);
+		message.setCustomer(customer);
+		message.setRequest(testRequest);
+		
+		testRequest.getMessages().add(message);
+		
+		testDao.update(testRequest);
+
+		createdRequests.add(testRequest);
+
+		Request persistedRequest = testDao.findById(testRequest.getId());
+
+		Assert.isTrue(testRequest.getId() > -1);
+		Assert.notNull(persistedRequest);
+		Assert.isTrue(persistedRequest.getId() == testRequest.getId());
+		
+		Assert.isTrue(getMessages(persistedRequest).size()==1);
+		
+		for (Message theMessage : persistedRequest.getMessages()){
+			Assert.isTrue(theMessage.getText().equals(message.getText()));
+		}
+
+	}
+	
+	@Test
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public void testPersistWithAddingMessagesAndDocumentations() {
+
+		Customer customer = createCustomer();
+		customerDAO.persist(customer);
+		
+		Request testRequest = createRequest();
+		testRequest.setCustomer(customer);
+		testDao.persist(testRequest);
+		
+		Message message=new MessageImpl();
+		message.setText("Hallo");
+		message.setRead(false);
+		message.setCustomer(customer);
+		message.setRequest(testRequest);
+		
+		Documentation documentation = new DocumentationImpl();
+		documentation.setDescription("Description");
+		documentation.setName("Name");
+		documentation.setRequest(testRequest);
+		
+		testRequest.getMessages().add(message);
+		testRequest.getDocumentations().add(documentation);
+		
+		testDao.update(testRequest);
+
+		createdRequests.add(testRequest);
+
+		Request persistedRequest = testDao.findById(testRequest.getId());
+
+		Assert.isTrue(testRequest.getId() > -1);
+		Assert.notNull(persistedRequest);
+		Assert.isTrue(persistedRequest.getId() == testRequest.getId());
+		
+		Assert.isTrue(persistedRequest.getMessages().size()==1);
+		
+		for (Message theMessage : persistedRequest.getMessages()){
+			Assert.isTrue(theMessage.getText().equals(message.getText()));
+		}
+		
+		Assert.isTrue(persistedRequest.getDocumentations().size()==1);
+		
+		for (Documentation theDocu : persistedRequest.getDocumentations()){
+			Assert.isTrue(theDocu.getDescription().equals(documentation.getDescription()));
+		}
+
+	}
+
+	private Collection<Message> getMessages(Request request){
+		Collection<Message> messages = testDao.findById(request.getId()).getMessages();
+		messages.size();
+		return messages;
+	}
+	
 	private Customer createCustomer() {
 		Customer customer = new CustomerImpl();
 		customer.setFirstName("Max");

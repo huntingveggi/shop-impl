@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -65,20 +66,21 @@ public class RequestImpl extends AbstractEntity implements Request {
 
 	@Override
 	@OneToMany(targetEntity = DocumentationImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JoinColumn(name="request_id")
 	public Collection<Documentation> getDocumentations() {
 		return documentations;
 	}
 
 	@Override
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(targetEntity = RequestItemImpl.class)
+	@OneToMany(targetEntity = RequestItemImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JoinColumn(name="request_id")
 	public Collection<RequestItem> getItems() {
 		return items;
 	}
 
 	@Override
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(targetEntity = MessageImpl.class)
+	@OneToMany(targetEntity = MessageImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JoinColumn(name="request_id")
 	public Collection<Message> getMessages() {
 		return messages;
 	}
