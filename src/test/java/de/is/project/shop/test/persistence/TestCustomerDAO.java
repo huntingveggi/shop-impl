@@ -50,6 +50,25 @@ public class TestCustomerDAO {
 			testDao.delete(testC);
 		}
 	}
+	
+	@Test
+	public void tetPersistTenProduct(){
+		
+		Collection<Customer> customers = new LinkedList<Customer>();
+		
+		for(int i = 0; i<10; i++){
+			Customer testCustomer = createCustomer();
+			testDao.persist(testCustomer);
+			customers.add(testCustomer);
+		}
+		
+		for(Customer customer:customers){
+			Customer persistedCustomer = testDao.findById(customer.getId());
+			Assert.isTrue(persistedCustomer != null);
+			Assert.isTrue(persistedCustomer.getId()>0);
+			createdCustomers.add(persistedCustomer);
+		}
+	}
 
 	@Test
 	public void testPersist() {

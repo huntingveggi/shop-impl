@@ -2,7 +2,6 @@ package de.is.project.shop.impl.persistence;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -84,7 +83,7 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Product update(Product product) {
 		Session session = getCurrentSession();
-		session.saveOrUpdate(product);
+		session.save(product);
 		return product;
 	}
 
@@ -100,7 +99,6 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	public void delete(Product product) {
 		Session session = getCurrentSession();
 		session.delete(product);
-		session.flush();
 	}
 
 	/*

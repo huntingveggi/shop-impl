@@ -1,5 +1,8 @@
 package de.is.project.shop.test.persistence;
 
+import java.util.Collection;
+import java.util.LinkedList;
+
 import javax.inject.Inject;
 
 import org.junit.After;
@@ -10,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import de.is.project.shop.api.domain.Category;
@@ -53,8 +58,36 @@ public class TestProductDAO {
 		// productDao.delete(product);
 		// }
 	}
+	
+	@Test
+	public void tetPersistTenProducts(){
+		
+		Collection<Product> products = new LinkedList<Product>();
+		
+		for(int i = 0; i<10; i++){
+			CategoryImpl category1 = new CategoryImpl();
+			category1.setName("Category1");
+			CategoryImpl category2 = new CategoryImpl();
+			category2.setName("Category2");
+
+			Product testProduct = new ProductImpl();
+			testProduct.setDescription("Testme");
+			testProduct.getCategories().add(category1);
+			testProduct.getCategories().add(category2);
+			
+			productDao.persist(testProduct);
+			products.add(testProduct);
+		}
+		
+		for(Product product:products){
+			Product persistedProduct = productDao.findById(product.getId());
+			Assert.isTrue(persistedProduct != null);
+			Assert.isTrue(persistedProduct.getId()>0);
+		}
+	}
 
 	@Test
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void testPersist() {
 
 		CategoryImpl category1 = new CategoryImpl();
@@ -81,6 +114,7 @@ public class TestProductDAO {
 	}
 
 	@Test
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void testPersistWithAddingCategories() {
 
 		CategoryImpl category1 = new CategoryImpl();
@@ -180,6 +214,7 @@ public class TestProductDAO {
 	}
 
 	@Test
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void testUpdate() {
 
 		String description1 = "Testme";

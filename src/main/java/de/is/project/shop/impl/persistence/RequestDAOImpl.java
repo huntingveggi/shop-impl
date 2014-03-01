@@ -24,7 +24,7 @@ public class RequestDAOImpl extends AbstractDAO implements RequestDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Request persist(Request entity) {
 		Session session = getCurrentSession();
-		session.saveOrUpdate(entity);
+		session.save(entity);
 		return entity;
 	}
 

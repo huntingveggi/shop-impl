@@ -53,7 +53,7 @@ public class ProductImpl extends AbstractEntity implements Product {
 	}
 
 	@Override
-	@OneToMany(targetEntity = CategoryImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = CategoryImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
 	public Collection<Category> getCategories() {
 		return this.categories;
 	}

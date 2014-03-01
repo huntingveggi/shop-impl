@@ -53,6 +53,25 @@ public class TestAddressDAO {
 	}
 	
 	@Test
+	public void tetPersistTenProduct(){
+		
+		Collection<Address> addresses = new LinkedList<Address>();
+		
+		for(int i = 0; i<10; i++){
+			Address testAddress = createAddress();
+			testDao.persist(testAddress);
+			addresses.add(testAddress);
+		}
+		
+		for(Address address:addresses){
+			Address persistedAddress = testDao.findById(address.getId());
+			Assert.isTrue(persistedAddress != null);
+			Assert.isTrue(persistedAddress.getId()>0);
+			createdAddresss.add(persistedAddress);
+		}
+	}
+	
+	@Test
 	public void testPersist() {
 		
 		//Initial persist

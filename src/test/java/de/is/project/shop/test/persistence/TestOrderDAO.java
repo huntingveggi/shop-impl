@@ -66,6 +66,26 @@ public class TestOrderDAO {
 	}
 	
 	@Test
+	public void tetPersistTenProduct(){
+		
+		Collection<Order> orders = new LinkedList<Order>();
+		
+		for(int i = 0; i<10; i++){
+			Order testOrder = createOrder();
+			testDao.persist(testOrder);
+			orders.add(testOrder);
+		}
+		
+		for(Order order:orders){
+			Order persistedOrder = testDao.findById(order.getId());
+			Assert.isTrue(persistedOrder != null);
+			Assert.isTrue(persistedOrder.getId()>0);
+			createdOrders.add(persistedOrder);
+		}
+	}
+
+	
+	@Test
 	public void testPersist() {
 
 		Order testOrder = createOrder();

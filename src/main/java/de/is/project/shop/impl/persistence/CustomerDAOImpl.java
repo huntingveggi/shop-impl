@@ -20,7 +20,7 @@ public class CustomerDAOImpl extends AbstractDAO implements CustomerDAO{
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Customer persist(Customer customer) {
 		Session session = getCurrentSession();
-		session.saveOrUpdate(customer);
+		session.save(customer);
 		return customer;
 	}
 

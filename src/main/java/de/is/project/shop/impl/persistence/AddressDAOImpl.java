@@ -29,7 +29,7 @@ public class AddressDAOImpl extends AbstractDAO implements AddressDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Address persist(Address entity) {
 		Session session = getCurrentSession();
-		session.saveOrUpdate(entity);
+		session.save(entity);
 		return entity;
 	}
 
@@ -53,10 +53,12 @@ public class AddressDAOImpl extends AbstractDAO implements AddressDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(Address entity) {
 		Session session = getCurrentSession();
-		if(entity.getCustomer().getAddress() != null){
-			if(entity.getCustomer().getAddress().getId() == entity.getId())
-			entity.getCustomer().setAddress(null);
-			customerDAO.update(entity.getCustomer());
+		if(entity.getCustomer() != null){
+			if(entity.getCustomer().getAddress() != null){
+				if(entity.getCustomer().getAddress().getId() == entity.getId())
+				entity.getCustomer().setAddress(null);
+				customerDAO.update(entity.getCustomer());
+			}
 		}
 		session.delete(entity);
 	}

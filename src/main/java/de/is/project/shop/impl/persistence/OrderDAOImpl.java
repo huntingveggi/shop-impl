@@ -24,7 +24,7 @@ public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Order persist(Order entity) {
 		Session session = getCurrentSession();
-		session.saveOrUpdate(entity);
+		session.save(entity);
 		return entity;
 	}
 

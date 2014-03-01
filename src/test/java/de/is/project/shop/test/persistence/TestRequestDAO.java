@@ -21,13 +21,16 @@ import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Documentation;
 import de.is.project.shop.api.domain.Message;
+import de.is.project.shop.api.domain.Product;
 import de.is.project.shop.api.domain.Request;
 import de.is.project.shop.api.persistence.CustomerDAO;
 import de.is.project.shop.api.persistence.RequestDAO;
 import de.is.project.shop.impl.domain.AddressImpl;
+import de.is.project.shop.impl.domain.CategoryImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
 import de.is.project.shop.impl.domain.DocumentationImpl;
 import de.is.project.shop.impl.domain.MessageImpl;
+import de.is.project.shop.impl.domain.ProductImpl;
 import de.is.project.shop.impl.domain.RequestImpl;
 import de.is.project.shop.impl.domain.RequestStatus;
 import de.is.project.shop.impl.utils.ActivationKeyUtil;
@@ -55,6 +58,25 @@ public class TestRequestDAO {
 			if (oTest != null) {
 				testDao.delete(r);
 			}
+		}
+	}
+	
+	@Test
+	public void tetPersistTenProducts(){
+		
+		Collection<Request> requests = new LinkedList<Request>();
+		
+		for(int i = 0; i<10; i++){
+			Request testRequest = createRequest();
+			testDao.persist(testRequest);
+			requests.add(testRequest);
+		}
+		
+		for(Request request:requests){
+			Request persistedRequest = testDao.findById(request.getId());
+			Assert.isTrue(persistedRequest != null);
+			Assert.isTrue(persistedRequest.getId()>0);
+			createdRequests.add(persistedRequest);
 		}
 	}
 
