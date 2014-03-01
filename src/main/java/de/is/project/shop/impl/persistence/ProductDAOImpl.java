@@ -35,7 +35,7 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Product persist(Product product) {
 		Session session = getCurrentSession();
-		session.saveOrUpdate(product);
+		session.save(product);
 		return product;
 	}
 
