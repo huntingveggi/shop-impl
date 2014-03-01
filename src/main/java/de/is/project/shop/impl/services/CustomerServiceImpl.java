@@ -17,6 +17,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Inject
 	CustomerDAO customerDAO;
+	Customer customer;
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
@@ -34,8 +35,20 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void registerCustomer() {
-		// TODO Auto-generated method stub
+		if(this.customer==null){
+			RuntimeException ex = new RuntimeException("Error registering customer. Customer cannot be null. Use setCustomer method befor registering.");
+			throw ex;
+		}else{
+			
+		}
+	}
 
+	@Override
+	public void setCustomer(Customer customer) {
+		if(this.customer == null){
+			this.customer=customer;
+		}
+		
 	}
 
 }
