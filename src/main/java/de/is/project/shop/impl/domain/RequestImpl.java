@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,10 +24,12 @@ import de.is.project.shop.api.domain.Documentation;
 import de.is.project.shop.api.domain.Message;
 import de.is.project.shop.api.domain.Request;
 import de.is.project.shop.api.domain.RequestItem;
+import de.is.project.shop.api.domain.Visitable;
+import de.is.project.shop.api.domain.Visitor;
 
 @Entity
 @Table(name = "requests")
-public class RequestImpl extends AbstractEntity implements Request {
+public class RequestImpl extends AbstractEntity implements Request, Visitable {
 
 	Customer customer;
 	Collection<RequestItem> items = new LinkedList<RequestItem>();
@@ -65,20 +68,21 @@ public class RequestImpl extends AbstractEntity implements Request {
 
 	@Override
 	@OneToMany(targetEntity = DocumentationImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JoinColumn(name="request_id")
 	public Collection<Documentation> getDocumentations() {
 		return documentations;
 	}
 
 	@Override
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(targetEntity = RequestItemImpl.class)
+	@OneToMany(targetEntity = RequestItemImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JoinColumn(name="request_id")
 	public Collection<RequestItem> getItems() {
 		return items;
 	}
 
 	@Override
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(targetEntity = MessageImpl.class)
+	@OneToMany(targetEntity = MessageImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JoinColumn(name="request_id")
 	public Collection<Message> getMessages() {
 		return messages;
 	}
@@ -145,6 +149,11 @@ public class RequestImpl extends AbstractEntity implements Request {
 	@Override
 	public void setTotal(double total) {
 		this.total = total;
+	}
+
+	@Override
+	public void accept(Visitor visitor) {
+		visitor.visit(this);		
 	}
 
 }

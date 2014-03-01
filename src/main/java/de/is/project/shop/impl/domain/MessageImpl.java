@@ -7,11 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Message;
 import de.is.project.shop.api.domain.Request;
 
@@ -19,18 +19,27 @@ import de.is.project.shop.api.domain.Request;
 @Table(name = "messages")
 public class MessageImpl extends AbstractEntity implements Message {
 
-	@OneToMany(cascade = { CascadeType.ALL }, targetEntity = RequestImpl.class)
 	Request request;
 
 	Date messageDate;
 
-	@Column
 	String text;
 
 	boolean isRead;
+	
+	Customer customer;
 
-	@Column
-	boolean isFromAdmin;
+	@Override
+	@ManyToOne(targetEntity=CustomerImpl.class, cascade=CascadeType.ALL)
+	public Customer getCustomer() {
+		return this.customer;
+	}
+
+	@Override
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getMessageDate() {
+		return this.messageDate;
+	}
 
 	@Override
 	@ManyToOne(targetEntity = RequestImpl.class, fetch = FetchType.EAGER)
@@ -39,13 +48,9 @@ public class MessageImpl extends AbstractEntity implements Message {
 	}
 
 	@Override
+	@Column(name="text")
 	public String getText() {
 		return text;
-	}
-
-	@Override
-	public boolean isFromAdmin() {
-		return isFromAdmin;
 	}
 
 	@Override
@@ -55,8 +60,12 @@ public class MessageImpl extends AbstractEntity implements Message {
 	}
 
 	@Override
-	public void setFromAdmin(boolean isFromAdmin) {
-		this.isFromAdmin = isFromAdmin;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	@Override
+	public void setMessageDate(Date messageDate) {
+		this.messageDate = messageDate;
 	}
 
 	@Override
@@ -72,16 +81,6 @@ public class MessageImpl extends AbstractEntity implements Message {
 	@Override
 	public void setText(String text) {
 		this.text = text;
-	}
-
-	@Override
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getMessageDate() {
-		return this.messageDate;
-	}
-
-	public void setMessageDate(Date messageDate) {
-		this.messageDate = messageDate;
 	}
 
 }

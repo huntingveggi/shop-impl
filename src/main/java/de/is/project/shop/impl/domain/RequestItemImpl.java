@@ -71,23 +71,18 @@ public class RequestItemImpl extends AbstractEntity implements RequestItem {
 
 	@Override
 	public void setProduct(Product product) {
+		if (this.getProduct() == null) {
+			this.setQuantity(1);
+		}
+		this.setPrice(product.getPrice());
+		this.setTotal(quantity*this.getPrice());
 		this.product = product;
 	}
 
-	@Override
-	public void setQuantity() {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void setQuantity(int quantity) {
+		if (this.getPrice()!=0.0)
+			this.setTotal(quantity*this.getPrice());
 		this.quantity = quantity;
-	}
-
-	@Override
-	public void setRequest() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void setRequest(Request request) {

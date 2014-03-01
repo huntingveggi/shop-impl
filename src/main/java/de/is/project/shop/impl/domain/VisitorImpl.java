@@ -2,6 +2,8 @@ package de.is.project.shop.impl.domain;
 
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
+import de.is.project.shop.api.domain.Request;
+import de.is.project.shop.api.domain.RequestItem;
 import de.is.project.shop.api.domain.ShoppingCart;
 import de.is.project.shop.api.domain.ShoppingCartPosition;
 import de.is.project.shop.api.domain.Visitor;
@@ -35,6 +37,19 @@ public class VisitorImpl implements Visitor {
 		item.setTotal(item.getQuantity() * item.getProduct().getPrice());
 		return item.getTotal();
 	}
+
+	@Override
+	public void visit(Request request) {
+		double sum = 0;
+		for (RequestItem item : request.getItems()) {
+			sum = sum + calculateTotalForRequestItem(item);
+		}
+		request.setTotal(sum);
+	}
 	
+	private double calculateTotalForRequestItem(RequestItem item) {
+		item.setTotal(item.getQuantity() * item.getProduct().getPrice());
+		return item.getTotal();
+	}
 
 }

@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import de.is.project.shop.api.domain.BillOfDelivery;
@@ -23,6 +24,7 @@ public class BillOfDeliveryImpl extends AbstractEntity implements
 	@Override
 	//@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(targetEntity = OrderItemImpl.class, cascade = { CascadeType.ALL }, orphanRemoval=true, fetch = FetchType.LAZY)
+	@JoinColumn(name="bill_of_delivery_id")
 	public Collection<OrderItem> getOrderItems() {
 		return this.orderItems;
 	}

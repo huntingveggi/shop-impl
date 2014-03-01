@@ -74,4 +74,9 @@ public class AddressDAOImpl extends AbstractDAO implements AddressDAO {
 		return customersAddresses;
 	}
 
+	@Override
+	public Address getNewInstance() {
+		return new AddressImpl();
+	}
+
 }

@@ -138,4 +138,17 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 		return getCurrentSession().createCriteria(ProductImpl.class).list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Collection<Product> getCurrentOffers() {
+		return getCurrentSession().createCriteria(ProductImpl.class)
+				.add(Restrictions.eq("specialOffer", true)).list();
+	}
+	
+	@Override
+	public Product getNewInstance() {
+		return new ProductImpl();
+	}
+
 }

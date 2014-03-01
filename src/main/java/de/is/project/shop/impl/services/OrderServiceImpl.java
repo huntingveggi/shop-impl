@@ -15,6 +15,8 @@ import de.is.project.shop.api.domain.Invoice;
 import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
+import de.is.project.shop.api.domain.Request;
+import de.is.project.shop.api.domain.RequestItem;
 import de.is.project.shop.api.domain.ShoppingCart;
 import de.is.project.shop.api.domain.ShoppingCartPosition;
 import de.is.project.shop.api.domain.Visitor;
@@ -209,6 +211,19 @@ public class OrderServiceImpl implements OrderService {
 			Product freshProduct = productDAO.findById(position.getProduct()
 					.getId());
 			for (int i = position.getQuantity(); i > 0; i--)
+				this.addProduct(freshProduct);
+		}
+		return this.order;
+	}
+
+	@Override
+	public Order createOrderfromRequest(Request request) {
+		this.order = new OrderImpl();
+
+		for (RequestItem item : request.getItems()) {
+			Product freshProduct = productDAO.findById(item.getProduct()
+					.getId());
+			for (int i = item.getQuantity(); i > 0; i--)
 				this.addProduct(freshProduct);
 		}
 		return this.order;

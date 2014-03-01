@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 import de.is.project.shop.api.domain.Documentation;
 import de.is.project.shop.api.domain.Request;
 
-@Entity
+@Entity(name="documentations")
 public class DocumentationImpl extends AbstractEntity implements Documentation {
 
 	@OneToMany(cascade = { CascadeType.ALL }, targetEntity = RequestImpl.class)
