@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<products>
+    <product>
+        <id>1</id>
+        <producer>
+            <id>0</id>
+            <name>Siemens</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Waschmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>7</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>WM14E425</name>
+        <description>Waschmaschine Frontlader / A+++ / 1400 UpM / 7 kg / Weiß / Super 15 / Schaumerkennnung</description>
+        <price>432.09</price>
+        <stock>5</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>2</id>
+        <producer>
+            <id>0</id>
+            <name>Gorenje</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Waschmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>5</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>schwarz</value>
+            </attribute>
+        </attributes>
+        <name>WA50129SBK</name>
+        <description> Waschmaschine Frontlader / A+ B / 1200 UpM / 5 kg / 15 Programme / Super Silent /  </description>
+        <price>729.95</price>
+        <stock>2</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>3</id>
+        <producer>
+            <id>0</id>
+            <name>Samsung</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Waschmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>7</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>WF5784</name>
+        <description>Waschmaschine Frontlader / A+++ / 1400 UpM / 7 kg / weiß/chrom / Schaum Aktiv Technologie </description>
+        <price>642.60</price>
+        <stock>10</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>4</id>
+        <producer>
+            <id>0</id>
+            <name>Bauknecht</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Waschmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>6</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>WA Plus 624</name>
+        <description>TDi Waschmaschine Frontlader / A++ / 1400 UpM / 6 kg / weiß / Startzeitvorwahl / Vollwasserschutz / Small display /unterbaufähig </description>
+        <price>402.10</price>
+        <stock>3</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>5</id>
+        <producer>
+            <id>0</id>
+            <name>Miele</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Waschmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>8</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>W 5873 WPS</name>
+        <description>Edition 111 Waschmaschine Frontlader / A+++ / 1600 UpM / 8 kg / Lotosweiß / Eco-Feedback / Waterproof System </description>
+        <price>432.09</price>
+        <stock>1</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>6</id>
+        <producer>
+            <id>0</id>
+            <name>Bosch</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Waschmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>8</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>WAY32542</name>
+        <description>Waschmaschine Frontlader / A+++ / 1600 UpM / 8 kg / Weiß / VarioPerfect / Eco Silence Drive  </description>
+        <price>490.44</price>
+        <stock>9</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>7</id>
+        <producer>
+            <id>0</id>
+            <name>Beko</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Waschmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>7</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>blau</value>
+            </attribute>
+        </attributes>
+        <name>WM14E425</name>
+        <description>Blue Waschmaschine Frontlader / A+++B / 171 kWh/Jahr / 1400 UpM / 7 kg / Pet Hair Removal / großes Display / blau </description>
+        <price>432.09</price>
+        <stock>2</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>8</id>
+        <producer>
+            <id>0</id>
+            <name>LG</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Waschmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>8</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>F1447TD01</name>
+        <description>Waschmaschine Frontlader / A+++ / 8 kg / 1400 UpM / Startzeitvorwahl / Beladungserkennung </description>
+        <price>571.98</price>
+        <stock>4</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>true</isSpecialOffer>
+    </product>
+	<product>
+        <id>9</id>
+        <producer>
+            <id>0</id>
+            <name>Samsung</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Trockner</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>8</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>C</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>SDC3D809/XEG</name>
+        <description>Kondenstrockner / C / 1000 UpM / 8 kg / weiß / Kondenswasser-Anzeige / Diamond Pflegetrommel  </description>
+        <price>432.00</price>
+        <stock>2</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>10</id>
+        <producer>
+            <id>0</id>
+            <name>AEG</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Trocker</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>8</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>T97685IH</name>
+        <description>Wärmepumpentrockner / A+++ / 8 kg / Edelstahl / Restlaufanzeige / Startzeitvorwahl  </description>
+        <price>952.10</price>
+        <stock>4</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>11</id>
+        <producer>
+            <id>0</id>
+            <name>Bauknecht</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Trockner</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (kg)</name>
+                <value>8</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>TK UNIQ 73A Di</name>
+        <description>Wärmepumpentrockner A++ / 7 kg / Reversierung / Display / EcoMonitor / Ablaufschlauch / Supersanft Programm / E8 display / Reversierende Trommel  </description>
+        <price>602.10</price>
+        <stock>1</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>	
+	<product>
+        <id>12</id>
+        <producer>
+            <id>0</id>
+            <name>Siemens</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Geschirrspülmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (Maßgedecke)</name>
+                <value>13</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>silber</value>
+            </attribute>
+        </attributes>
+        <name>SN26V896EU</name>
+        <description>Freistehender Geschirrspüler / A+++ A / 13 Maßgedecke / 44 db / silber Inox / iQ-Drive Motor / Zeolith-Trocknen </description>
+        <price>929.55</price>
+        <stock>4</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>13</id>
+        <producer>
+            <id>0</id>
+            <name>Beko</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Geschirrspülmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (Maßgedecke)</name>
+                <value>13</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>rot</value>
+            </attribute>
+        </attributes>
+        <name>DFN 6634 R</name>
+        <description>Freistehender Geschirrspüler / A++A / 261 kWh/Jahr / 13 MGD / 2800 Liters/Jahr / 43 db / 6 Spülprogramme / 5 Reinigungstemperaturen / Bürstenloser Gleichstrommotor / Watersafe+ / rot / 59.8 cm </description>
+        <price>462.07</price>
+        <stock>3</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>14</id>
+        <producer>
+            <id>0</id>
+            <name>Bomann</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Geschirrspülmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (Maßgedecke)</name>
+                <value>14</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>edelstahl</value>
+            </attribute>
+        </attributes>
+        <name>GSP 744 IX </name>
+        <description>Freistehender Geschirrspüler / Unterbaufähig / A+ AA / 12.5 L / edelstahl / 60 cm  </description>
+        <price>387.17</price>
+        <stock>2</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>true</isSpecialOffer>
+    </product>
+	<product>
+        <id>15</id>
+        <producer>
+            <id>0</id>
+            <name>Bosch</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Geschirrspülmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (Maßgedecke)</name>
+                <value>13</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>silber</value>
+            </attribute>
+        </attributes>
+        <name>SMS69U88EU </name>
+        <description>Freistehender Geschirrspüler / A+++ A / 13 Maßgedecke / 44 db / silber Inox / ActiveWater / AquaSensor / Zeolith  </description>
+        <price>883.00</price>
+        <stock>8</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>16</id>
+        <producer>
+            <id>0</id>
+            <name>Siemens</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Geschirrspülmaschinen</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nennkapazität (Maßgedecke)</name>
+                <value>13</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> weiß</value>
+            </attribute>
+        </attributes>
+        <name>SN25M209EU </name>
+        <description> Freistehender Geschirrspüler / A++ A / 13 Maßgedecke / 46 db / weiß </description>
+        <price>599.99</price>
+        <stock>7</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>17</id>
+        <producer>
+            <id>0</id>
+            <name>Bauknecht</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Kühlschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>13</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> weiß</value>
+            </attribute>
+        </attributes>
+        <name>KV 175 PLUS </name>
+        <description> Kühlschrank / A++ / 139 kWh/Jahr / Kühlen: 110 Liter / Gefrieren: 16 Liter / Abtauautomatik im Kühlteil </description>
+        <price>263.02</price>
+        <stock>2</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>18</id>
+        <producer>
+            <id>0</id>
+            <name>AEG</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Kühlschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>222</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> weiß</value>
+            </attribute>
+        </attributes>
+        <name>SN25M209EU </name>
+        <description> Einbau-Kühlschrank / A++ / Kühlen: 222 L / Weiß</description>
+        <price>239.99</price>
+        <stock>2</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>19</id>
+        <producer>
+            <id>0</id>
+            <name>Gorenje</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Kühlschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>13</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> feuerrot</value>
+            </attribute>
+        </attributes>
+        <name>R6152BRD </name>
+        <description>  EcoTopTen / Umluft-Kühlsystem mit Quick colling Funktion / feuerrot  </description>
+        <price>412.00</price>
+        <stock>3</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>20</id>
+        <producer>
+            <id>0</id>
+            <name>AEG</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Kühlschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>13</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> edelstahl</value>
+            </attribute>
+        </attributes>
+        <name>SANTO S71440TSX0  </name>
+        <description> Freistehender Kühlschrank / A++ / 134 kWh/Jahr / 137 Liter / 38 dB / Edelstahl </description>
+        <price>382.99</price>
+        <stock>2</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>21</id>
+        <producer>
+            <id>0</id>
+            <name>Gorenje</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Kühlschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>133</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> creme</value>
+            </attribute>
+        </attributes>
+        <name>RB 60299 OC-L </name>
+        <description>  Kühlschrank / A++ / 154 cm Höhe / 196 kWh/Jahr / 255 L Kühlteil / 26 L Gefrierteil / Umluft-Kühlsystem mit QuickCooling-Funktion / 4 Glasabstellflächen / creme  </description>
+        <price>814.16</price>
+        <stock>7</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>22</id>
+        <producer>
+            <id>0</id>
+            <name>Siemens</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Kühlschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>348</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> weiß</value>
+            </attribute>
+        </attributes>
+        <name>KS36VVI30 </name>
+        <description> Kühlschrank / A++ / Kühlen: 348 L / inox-antifingerprint / bottleRack / safetyGlass / ecoPlus  </description>
+        <price>628.99</price>
+        <stock>2</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>23</id>
+        <producer>
+            <id>0</id>
+            <name>Miele</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Kühlschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>151</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> weiß</value>
+            </attribute>
+        </attributes>
+        <name>K 12022 S-1 </name>
+        <description> Kühlschrank / A+ / Kühlen: 127 L / Gefrieren: 18 L / Weiß / ComfortClean - hygienische Reinigung  </description>
+        <price>400.99</price>
+        <stock>7</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>true</isSpecialOffer>
+    </product>
+	<product>
+        <id>24</id>
+        <producer>
+            <id>0</id>
+            <name>Gorenje</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Kühlschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>288</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> braun</value>
+            </attribute>
+        </attributes>
+        <name>RB60299OCO-L </name>
+        <description> Kühlschrank / A++ / 196 kWh/Jahr / Kühlteil: 255 L / Gefrierteil: 26 L / royal coffee / Umluft-Kühlsystem mit Quick Cooling Funktion / Türanschlag links / Eco Top Ten  </description>
+        <price>812.99</price>
+        <stock>4</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>25</id>
+        <producer>
+            <id>0</id>
+            <name>Gorenje</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Kühlschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>13</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> rot</value>
+            </attribute>
+        </attributes>
+        <name>RB 60299 OR</name>
+        <description> Kühlschrank / A++ / 154 cm Höhe / 196 kWh/Jahr / 255 L Kühlteil / 26 L Gefrierteil / Umluft-Kühlsystem mit QuickCooling-Funktion / 4 Glasabstellflächen / vulcano red  </description>
+        <price>666.66</price>
+        <stock>6</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>26</id>
+        <producer>
+            <id>0</id>
+            <name>Severin</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Gefrierschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Nutzinhalt (Liter)</name>
+                <value>65</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>EEK A+</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>KS 9890</name>
+        <description>Tischgefrierschrank, weiß / EEK A+ / 174 kWh/Jahr / 65 Liter Nutzinhalt</description>
+        <price>154.00</price>
+        <stock>2</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+	<product>
+        <id>27</id>
+        <producer>
+            <id>0</id>
+            <name>Siemens</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Gefrierschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>220</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value> weiß</value>
+            </attribute>
+        </attributes>
+        <name>GS33NVW30</name>
+        <description>Gefrierschrank / A++ / Gefrieren: 220 L / weiß / NoFrost / bigBox / EcoPlus</description>
+        <price>420.10</price>
+        <stock>6</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>	
+	<product>
+	        <id>28</id>
+        <producer>
+            <id>0</id>
+            <name>Bosch</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Gefrierschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>286</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A+++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>GSN51AW40</name>
+        <description>Gefrierschrank / A+++ / Gefrieren: 286 L / Weiß / NoFrost / digitale Temperaturanzeige</description>
+        <price>717.60</price>
+        <stock>1</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>true</isSpecialOffer>
+    </product>
+	<product>
+	        <id>29</id>
+        <producer>
+            <id>0</id>
+            <name>Miele</name>
+        </producer>
+        <categories>
+            <category>
+                <id>0</id>
+                <name>Gefrierschränke</name>
+            </category>
+        </categories>
+        <attributes>
+            <attribute>
+                <name>Fassungsvermögen (Liter)</name>
+                <value>104</value>
+            </attribute>
+			<attribute>
+                <name>Energieeffizienzklasse </name>
+                <value>A++</value>
+            </attribute>
+			<attribute>
+                <name>Farbe</name>
+                <value>weiß</value>
+            </attribute>
+        </attributes>
+        <name>F 12016 S-2</name>
+        <description>Mini-Gefrierschrank / A++ / Gefrieren: 104 L / Weiß / 4 Gefrierschubladen</description>
+        <price>449.00</price>
+        <stock>1</stock>
+        <rateOfTaxation>19%</rateOfTaxation>
+        <measurand></measurand>
+        <isSpecialOffer>false</isSpecialOffer>
+    </product>
+</products>
+
