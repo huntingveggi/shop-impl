@@ -2,6 +2,7 @@ package de.is.project.shop.impl.helper;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,6 +38,10 @@ public class ProductImportHelper {
 
 	@Inject
 	@XmlTransient
+	ProductDAO productDAO;
+
+	@Inject
+	@XmlTransient
 	ApplicationContext context;
 
 	public static void main(String[] args) {
@@ -44,7 +49,7 @@ public class ProductImportHelper {
 				"classpath*:**/spring.xml");
 
 		ProductImportHelper helper = context.getBean(ProductImportHelper.class);
-
+		helper.deleteAll();
 		helper.start();
 	}
 
@@ -53,9 +58,15 @@ public class ProductImportHelper {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void start() {
+	public void deleteAll() {
+		Collection<Product> products = productDAO.findAll();
+		for (Product product : products) {
+			productDAO.delete(product);
+		}
+	}
 
-		ProductDAO productDAO = context.getBean(ProductDAO.class);
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void start() {
 
 		ProductImpl productImpl = new ProductImpl();
 		productImpl.setDescription("desc");
