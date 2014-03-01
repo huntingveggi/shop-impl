@@ -7,9 +7,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
+import de.is.project.shop.api.persistence.AddressDAO;
 import de.is.project.shop.api.persistence.CustomerDAO;
 import de.is.project.shop.api.services.CustomerService;
+import de.is.project.shop.impl.utils.ActivationKeyUtil;
 
 @Named
 @Scope("prototype")
@@ -17,6 +20,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Inject
 	CustomerDAO customerDAO;
+	@Inject
+	AddressDAO addressDAO;
 	Customer customer;
 	
 	@Override
@@ -27,8 +32,8 @@ public class CustomerServiceImpl implements CustomerService {
 		if(customer == null){
 			return false;
 		}else{
-			customer.setActivationKey("");
 			customer.setActive(true);
+			customerDAO.update(customer);
 			return true;
 		}
 	}
@@ -40,6 +45,13 @@ public class CustomerServiceImpl implements CustomerService {
 			throw ex;
 		}else{
 			
+			Address address = this.customer.getAddress();
+			address.setCustomer(customer);
+			this.customer.setAddress(null);
+			this.customer.setActivationKey(ActivationKeyUtil.getUniqueActivationKey());
+			this.customer.setActive(false);
+			customerDAO.persist(this.customer);
+			addressDAO.persist(address);
 		}
 	}
 
