@@ -14,14 +14,18 @@ import org.springframework.util.Assert;
 import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Order;
+import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
+import de.is.project.shop.api.domain.ShoppingCart;
 import de.is.project.shop.api.persistence.ProductDAO;
 import de.is.project.shop.api.services.OrderService;
+import de.is.project.shop.api.services.ShoppingCartService;
 import de.is.project.shop.impl.domain.AddressImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
 import de.is.project.shop.impl.domain.OrderImpl;
 import de.is.project.shop.impl.domain.PaymentTerm;
 import de.is.project.shop.impl.domain.ProductImpl;
+import de.is.project.shop.impl.domain.ShoppingCartImpl;
 import de.is.project.shop.impl.utils.ActivationKeyUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,10 +34,13 @@ public class TestOrderService {
 
 	@Inject
 	private OrderService service;
+	
+	@Inject
+	private ShoppingCartService scs;
 
 	@Inject
 	private ProductDAO productDAO;
-	
+
 	private Product product1;
 	private Product product2;
 
@@ -50,7 +57,7 @@ public class TestOrderService {
 		service.setOrder(order);
 	}
 
-	private Customer createCustomer(){
+	private Customer createCustomer() {
 		Customer customer = new CustomerImpl();
 		customer.setFirstName("Max");
 		customer.setLastName("Mustermann");
@@ -65,7 +72,7 @@ public class TestOrderService {
 		return customer;
 	}
 
-	private Address createAddress(){
+	private Address createAddress() {
 		Address address = new AddressImpl();
 		address.setStreet("Street");
 		address.setStreetNumber("1b");
@@ -109,38 +116,61 @@ public class TestOrderService {
 	}
 
 	@Test
-	public void testPlaceOrder(){
+	public void testPlaceOrder() {
 		createAndSaveProducts();
 
 		service.addProduct(product1);
 		service.addProduct(product1);
 		service.addProduct(product2);
 
-		Order placedOrder= service.placeOrder();
-		Assert.isTrue(placedOrder.getId() > - 1);
-		
-		//deleteProducts();
+		Order placedOrder = service.placeOrder();
+		Assert.isTrue(placedOrder.getId() > -1);
+
+		// deleteProducts();
 	}
-	
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	private void createAndSaveProducts(){
+
+	@Test
+	public void testCreateOrderfromShoppingCart() {
+		setUp();
+		ShoppingCart sCart = new ShoppingCartImpl();
+		scs.setShoppingCart(sCart);
+		createAndSaveProducts();
+		scs.addProduct(product1);
+		scs.addProduct(product1);
+		scs.addProduct(product1);
+		scs.addProduct(product1);
+		scs.addProduct(product2);
+		double newPrice = 5.0;
+		product1.setPrice(newPrice);
+		productDAO.update(product1);
+		service.createOrderfromShoppingCart(scs.getShoppingCart());
+		Assert.isTrue(service.getOrder().getItems().size() == scs
+				.getShoppingCart().getShoppingCartPositions().size());
+		Assert.isTrue(service.getOrder().getTotal() == 33);
+		for (OrderItem item : service.getOrder().getItems()) {
+			if (item.getProduct().getId() == product1.getId())
+				Assert.isTrue(item.getQuantity() == 4);
+		}
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	private void createAndSaveProducts() {
 		product1 = createProdukt1();
 		product2 = createProdukt2();
 
 		product1 = productDAO.persist(product1);
 		product2 = productDAO.persist(product2);
+
 	}
-	
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	private void deleteProducts(){
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	private void deleteProducts() {
 
 		productDAO.delete(product1);
 		productDAO.delete(product2);
 	}
-	
-	
 
-	public Product createProdukt1(){
+	public Product createProdukt1() {
 		Product product1 = new ProductImpl();
 		product1.setName("Kuehlschrank1");
 		product1.setDescription("Niedriger Verbrauch zum spitzen Preis");
@@ -148,7 +178,7 @@ public class TestOrderService {
 		return product1;
 	}
 
-	public Product createProdukt2(){
+	public Product createProdukt2() {
 		Product product2 = new ProductImpl();
 		product2.setName("Kuehlschrank2");
 		product2.setDescription("Niedriger Verbrauch zum spitzen Preis");
