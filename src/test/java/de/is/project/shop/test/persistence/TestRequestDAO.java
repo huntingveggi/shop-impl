@@ -23,6 +23,7 @@ import de.is.project.shop.impl.domain.AddressImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
 import de.is.project.shop.impl.domain.RequestImpl;
 import de.is.project.shop.impl.domain.RequestStatus;
+import de.is.project.shop.impl.utils.ActivationKeyUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring.xml" })
@@ -103,7 +104,7 @@ public class TestRequestDAO {
 		customer.setLastName("Mustermann");
 		customer.setSex("male");
 		customer.setTitle("Dr.");
-		customer.setActivationKey("1234");
+		customer.setActivationKey(ActivationKeyUtil.getUniqueActivationKey());
 		customer.setEMail("lala@lulu.de");
 		customer.setPassword("geheim;-)");
 		customer.setActive(false);

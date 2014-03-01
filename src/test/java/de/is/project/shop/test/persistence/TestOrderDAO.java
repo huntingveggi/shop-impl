@@ -32,6 +32,7 @@ import de.is.project.shop.impl.domain.OrderItemImpl;
 import de.is.project.shop.impl.domain.OrderStatus;
 import de.is.project.shop.impl.domain.PaymentTerm;
 import de.is.project.shop.impl.domain.ProductImpl;
+import de.is.project.shop.impl.utils.ActivationKeyUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring.xml" })
@@ -253,7 +254,7 @@ public class TestOrderDAO {
 		customer.setLastName("Mustermann");
 		customer.setSex("male");
 		customer.setTitle("Dr.");
-		customer.setActivationKey("1234");
+		customer.setActivationKey(ActivationKeyUtil.getUniqueActivationKey());
 		customer.setEMail("lala@lulu.de");
 		customer.setPassword("geheim;-)");
 		customer.setActive(false);

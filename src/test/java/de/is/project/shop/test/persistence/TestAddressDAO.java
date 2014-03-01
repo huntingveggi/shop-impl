@@ -20,6 +20,7 @@ import de.is.project.shop.api.persistence.AddressDAO;
 import de.is.project.shop.api.persistence.CustomerDAO;
 import de.is.project.shop.impl.domain.AddressImpl;
 import de.is.project.shop.impl.domain.CustomerImpl;
+import de.is.project.shop.impl.utils.ActivationKeyUtil;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -180,7 +181,7 @@ public class TestAddressDAO {
 		customer.setLastName("Mustermann");
 		customer.setSex("male");
 		customer.setTitle("Dr.");
-		customer.setActivationKey("1234");
+		customer.setActivationKey(ActivationKeyUtil.getUniqueActivationKey());
 		customer.setEMail("lala@lulu.de");
 		customer.setPassword("geheim;-)");
 		customer.setActive(false);
