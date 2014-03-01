@@ -24,10 +24,12 @@ import de.is.project.shop.api.domain.Documentation;
 import de.is.project.shop.api.domain.Message;
 import de.is.project.shop.api.domain.Request;
 import de.is.project.shop.api.domain.RequestItem;
+import de.is.project.shop.api.domain.Visitable;
+import de.is.project.shop.api.domain.Visitor;
 
 @Entity
 @Table(name = "requests")
-public class RequestImpl extends AbstractEntity implements Request {
+public class RequestImpl extends AbstractEntity implements Request, Visitable {
 
 	Customer customer;
 	Collection<RequestItem> items = new LinkedList<RequestItem>();
@@ -147,6 +149,11 @@ public class RequestImpl extends AbstractEntity implements Request {
 	@Override
 	public void setTotal(double total) {
 		this.total = total;
+	}
+
+	@Override
+	public void accept(Visitor visitor) {
+		visitor.visit(this);		
 	}
 
 }
