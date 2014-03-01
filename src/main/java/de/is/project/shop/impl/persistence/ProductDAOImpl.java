@@ -105,20 +105,6 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * de.is.project.shop.api.persistence.ProductDAO#findByCategories(java.util
-	 * .Collection)
-	 */
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
-	public Collection<Product> findByCategories(Collection<Category> categories) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * de.is.project.shop.api.persistence.ProductDAO#findByProducer(de.is.project
 	 * .shop.api.domain.Producer)
 	 */
@@ -145,6 +131,17 @@ public class ProductDAOImpl extends AbstractDAO implements ProductDAO {
 		List<Product> offers = getCurrentSession().createCriteria(ProductImpl.class)
 				.add(Restrictions.eq("specialOffer", true)).list();
 		return offers;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Collection<Product> findByCategory(Category category) {
+		Criteria crit = getCurrentSession().createCriteria(ProductImpl.class);
+		
+		@SuppressWarnings("unchecked")
+		List<Product> products = crit.createAlias("categories", "category")
+				.add(Restrictions.eq("category.id", category.getId()))
+				.list();
+		return products;
 	}
 	
 	@Override

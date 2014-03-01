@@ -215,6 +215,22 @@ public class TestProductDAO {
 		Assert.isNull(p);
 
 	}
+	
+	@Test
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void findByCategory(){
+		CategoryImpl category1 = new CategoryImpl();
+		category1.setName("Category1");
+
+		Product testProduct = new ProductImpl();
+		testProduct.setDescription("Testme");
+		testProduct.getCategories().add(category1);
+
+		productDao.persist(testProduct);
+		
+		Collection<Product> products = productDao.findByCategory(category1);
+		Assert.isTrue(products.size()>0);
+	}
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRES_NEW)

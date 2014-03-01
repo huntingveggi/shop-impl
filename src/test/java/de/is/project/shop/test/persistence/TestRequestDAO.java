@@ -6,10 +6,18 @@ import java.util.LinkedList;
 
 import javax.inject.Inject;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -21,6 +29,7 @@ import de.is.project.shop.api.domain.Address;
 import de.is.project.shop.api.domain.Customer;
 import de.is.project.shop.api.domain.Documentation;
 import de.is.project.shop.api.domain.Message;
+import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.Product;
 import de.is.project.shop.api.domain.Request;
 import de.is.project.shop.api.persistence.CustomerDAO;
@@ -50,15 +59,30 @@ public class TestRequestDAO {
 	@Before
 	public void setUp() {
 	}
+	
+	@AfterClass
+	public static void tearDownAfterClass() {
+		String[] config = TestProductDAO.class.getAnnotation(
+				ContextConfiguration.class).locations();
+		ApplicationContext context = new ClassPathXmlApplicationContext(config);
+		((ConfigurableApplicationContext) context).registerShutdownHook();
+
+		SessionFactory factory = context.getBean(SessionFactory.class);
+		Session sess = factory.openSession();
+		Transaction tx = sess.beginTransaction();
+		Criteria criteria = sess.createCriteria(Request.class);
+		Collection<Request> requests = criteria.list();
+		for (Request request : requests) {
+			sess.delete(request);
+		}
+		sess.flush();
+		tx.commit();
+
+	}
 
 	@After
 	public void tearDown() {
-		for (Request r : createdRequests) {
-			Request oTest = testDao.findById(r.getId());
-			if (oTest != null) {
-				testDao.delete(r);
-			}
-		}
+		
 	}
 	
 	@Test
