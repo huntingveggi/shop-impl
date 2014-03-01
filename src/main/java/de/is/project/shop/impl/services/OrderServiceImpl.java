@@ -16,12 +16,14 @@ import de.is.project.shop.api.domain.Order;
 import de.is.project.shop.api.domain.OrderItem;
 import de.is.project.shop.api.domain.Product;
 import de.is.project.shop.api.domain.ShoppingCart;
+import de.is.project.shop.api.domain.ShoppingCartPosition;
 import de.is.project.shop.api.domain.Visitor;
 import de.is.project.shop.api.persistence.OrderDAO;
 import de.is.project.shop.api.persistence.ProductDAO;
 import de.is.project.shop.api.services.OrderService;
 import de.is.project.shop.impl.domain.BillOfDeliveryImpl;
 import de.is.project.shop.impl.domain.InvoiceImpl;
+import de.is.project.shop.impl.domain.OrderImpl;
 import de.is.project.shop.impl.domain.OrderItemImpl;
 import de.is.project.shop.impl.domain.OrderItemStatus;
 import de.is.project.shop.impl.domain.OrderStatus;
@@ -42,11 +44,11 @@ public class OrderServiceImpl implements OrderService {
 	public void addProduct(Product product) {
 		boolean found = false;
 
-		for (OrderItem item : this.order.getItems()){
-			if(product.getId() < 1){
+		for (OrderItem item : this.order.getItems()) {
+			if (product.getId() < 1) {
 				IllegalArgumentException e = new IllegalArgumentException();
 				throw e;
-			}else{
+			} else {
 				if (item.getProduct().getId() == product.getId()) {
 					item.setQuantity(item.getQuantity() + 1);
 					found = true;
@@ -110,7 +112,8 @@ public class OrderServiceImpl implements OrderService {
 			this.order.setStatus(OrderStatus.IN_PROCESS.toString());
 			for (OrderItem item : this.order.getItems()) {
 				item.setStatus(OrderItemStatus.IN_PROCESS.toString());
-				Product currentProduct = productDAO.findById(item.getProduct().getId());
+				Product currentProduct = productDAO.findById(item.getProduct()
+						.getId());
 				if (currentProduct.getStock() == 0) {
 					item.setReservedQuantity(0);
 				} else {
@@ -199,8 +202,15 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order createOrderfromShoppingCart(ShoppingCart shoppingCart) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		this.order = new OrderImpl();
 
+		for (ShoppingCartPosition position : shoppingCart
+				.getShoppingCartPositions()) {
+			Product freshProduct = productDAO.findById(position.getProduct()
+					.getId());
+			for (int i = position.getQuantity(); i > 0; i--)
+				this.addProduct(freshProduct);
+		}
+		return this.order;
+	}
 }
