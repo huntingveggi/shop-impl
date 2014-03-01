@@ -23,12 +23,14 @@ public class RequestServiceImpl implements RequestService {
 		for (RequestItem item : request.getItems()) {
 			if (item.getProduct().getId() == product.getId()) {
 				item.setQuantity((item.getQuantity()) + 1);
+				this.refreshRequest();
 				return;
 			}
 		}
 		RequestItem requestItem = new RequestItemImpl();
 		requestItem.setProduct(product);
 		request.getItems().add(requestItem);
+		this.refreshRequest();
 	}
 
 	@Override
@@ -37,7 +39,8 @@ public class RequestServiceImpl implements RequestService {
 		for (RequestItem item : request.getItems()) {
 			if (item.getProduct().getId() == product.getId()) {
 				if (item.getQuantity() > 1) {
-					item.setQuantity(item.getQuantity() + 1);
+					item.setQuantity(item.getQuantity() - 1);
+					this.refreshRequest();
 					return;
 				} else {
 					removeItem = item;
@@ -48,6 +51,7 @@ public class RequestServiceImpl implements RequestService {
 		if (request.getItems().contains(removeItem)) {
 			request.getItems().remove(removeItem);
 		}
+		this.refreshRequest();
 	}
 
 	@Override
