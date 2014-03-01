@@ -62,4 +62,9 @@ public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
 		List<Order> customersOrders = query.list();
 		return customersOrders;
 	}
+
+	@Override
+	public Order getNewInstance() {
+		return new OrderImpl();
+	}
 }

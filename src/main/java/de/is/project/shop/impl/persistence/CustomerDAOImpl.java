@@ -55,4 +55,9 @@ public class CustomerDAOImpl extends AbstractDAO implements CustomerDAO{
 				.add(Restrictions.eq("activationKey", activationKey)).uniqueResult();
 	}
 
+	@Override
+	public Customer getNewInstance() {
+		return new CustomerImpl();
+	}
+
 }

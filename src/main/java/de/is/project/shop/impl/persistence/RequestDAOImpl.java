@@ -64,4 +64,9 @@ public class RequestDAOImpl extends AbstractDAO implements RequestDAO {
 		return requests;
 	}
 
+	@Override
+	public Request getNewInstance() {
+		return new RequestImpl();
+	}
+
 }
