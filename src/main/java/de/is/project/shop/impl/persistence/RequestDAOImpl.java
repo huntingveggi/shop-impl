@@ -41,7 +41,6 @@ public class RequestDAOImpl extends AbstractDAO implements RequestDAO {
 	public void delete(Request entity) {
 		Session session = getCurrentSession();
 		session.delete(entity);
-		session.flush();
 	}
 
 	@Override
