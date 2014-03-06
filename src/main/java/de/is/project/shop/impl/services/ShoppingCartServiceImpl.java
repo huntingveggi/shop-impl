@@ -1,6 +1,7 @@
 package de.is.project.shop.impl.services;
 
 import javax.inject.Named;
+
 import org.springframework.context.annotation.Scope;
 
 import de.is.project.shop.api.domain.Product;
@@ -8,6 +9,7 @@ import de.is.project.shop.api.domain.ShoppingCart;
 import de.is.project.shop.api.domain.ShoppingCartPosition;
 import de.is.project.shop.api.domain.Visitor;
 import de.is.project.shop.api.services.ShoppingCartService;
+import de.is.project.shop.impl.domain.ShoppingCartImpl;
 import de.is.project.shop.impl.domain.ShoppingCartPositionImpl;
 import de.is.project.shop.impl.domain.VisitorImpl;
 
@@ -80,6 +82,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public ShoppingCart getShoppingCart() {
+		if (this.shoppingCart==null) {
+			this.shoppingCart = new ShoppingCartImpl();
+		}
 		return this.shoppingCart;
 	}
 
