@@ -104,6 +104,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order getOrder() {
+		if (this.order ==null) {
+			this.order = new OrderImpl();
+		}
 		return this.order;
 	}
 
