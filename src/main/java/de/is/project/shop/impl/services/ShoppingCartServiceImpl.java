@@ -18,11 +18,11 @@ import de.is.project.shop.impl.domain.VisitorImpl;
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	private ShoppingCart shoppingCart;
-	
+
 	@Override
 	public void addProduct(Product product) {
 		boolean found = false;
-		
+
 		for (ShoppingCartPosition pos : this.shoppingCart
 				.getShoppingCartPositions()) {
 			if (pos.getProduct().getId() == product.getId()) {
@@ -32,7 +32,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			}
 		}
 		if (!found) {
-			ShoppingCartPosition pos= new ShoppingCartPositionImpl();
+			ShoppingCartPosition pos = new ShoppingCartPositionImpl();
 			pos.setProduct(product);
 			pos.setQuantity(1);
 			pos.setTotal(product.getPrice());
@@ -47,13 +47,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 				.getShoppingCartPositions()) {
 			if (pos.getProduct().getId() == product.getId()) {
 				if (pos.getQuantity() < 2) {
-					if(this.shoppingCart.getShoppingCartPositions().size() == 1){
+					if (this.shoppingCart.getShoppingCartPositions().size() == 1) {
 						this.shoppingCart.getShoppingCartPositions().clear();
-					}else{
-						this.shoppingCart.getShoppingCartPositions().remove(pos);
+					} else {
+						this.shoppingCart.getShoppingCartPositions()
+								.remove(pos);
 					}
-				}else{
-					pos.setQuantity(pos.getQuantity()-1);
+				} else {
+					pos.setQuantity(pos.getQuantity() - 1);
 				}
 				break;
 			}
@@ -63,10 +64,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public void resetShoppingCart() {
-		this.shoppingCart.getShoppingCartPositions().clear();
-		refreshShoppingCart();
+		if (this.shoppingCart != null) {
+			this.shoppingCart.getShoppingCartPositions().clear();
+			refreshShoppingCart();
+		}
 	}
-	
+
 	@Override
 	public void refreshShoppingCart() {
 		Visitor visitor = new VisitorImpl();
@@ -82,7 +85,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public ShoppingCart getShoppingCart() {
-		if (this.shoppingCart==null) {
+		if (this.shoppingCart == null) {
 			this.shoppingCart = new ShoppingCartImpl();
 		}
 		return this.shoppingCart;
