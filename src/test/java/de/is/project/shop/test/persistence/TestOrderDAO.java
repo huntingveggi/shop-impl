@@ -40,6 +40,7 @@ import de.is.project.shop.impl.domain.OrderItemImpl;
 import de.is.project.shop.impl.domain.OrderStatus;
 import de.is.project.shop.impl.domain.PaymentTerm;
 import de.is.project.shop.impl.domain.ProductImpl;
+import de.is.project.shop.impl.domain.Role;
 import de.is.project.shop.impl.utils.ActivationKeyUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -304,11 +305,11 @@ public class TestOrderDAO {
 		customer.setSex("male");
 		customer.setTitle("Dr.");
 		customer.setActivationKey(ActivationKeyUtil.getUniqueActivationKey());
-		customer.setEMail("lala@lulu.de");
+		customer.setEMail(ActivationKeyUtil.getUniqueActivationKey()+"@lulu.de");
 		customer.setPassword("geheim;-)");
 		customer.setActive(false);
 		customer.setBillingCustomer(false);
-
+		customer.setRole(Role.CUSTOMER_ROLE.toString());
 		return customer;
 	}
 

@@ -22,9 +22,10 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	String eMail;
 	String password;
 	boolean active;
+	String role;
 
 	@Override
-	@Column(name = "activation_key", unique=true)
+	@Column(name = "activation_key", unique = true)
 	public String getActivationKey() {
 		return this.activationKey;
 	}
@@ -36,7 +37,7 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	}
 
 	@Override
-	@Column(name = "email", nullable = false)
+	@Column(name = "email", nullable = false, unique=true)
 	public String getEMail() {
 		return this.eMail;
 	}
@@ -57,6 +58,12 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	@Column(name = "password", nullable = false)
 	public String getPassword() {
 		return this.password;
+	}
+
+	@Override
+	@Column(name = "role", nullable = false)
+	public String getRole() {
+		return role;
 	}
 
 	@Override
@@ -121,6 +128,11 @@ public class CustomerImpl extends AbstractEntity implements Customer {
 	@Override
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import de.is.project.shop.impl.domain.OrderImpl;
 import de.is.project.shop.impl.domain.PaymentTerm;
 import de.is.project.shop.impl.domain.ProductImpl;
 import de.is.project.shop.impl.domain.RequestImpl;
+import de.is.project.shop.impl.domain.Role;
 import de.is.project.shop.impl.domain.ShoppingCartImpl;
 import de.is.project.shop.impl.utils.ActivationKeyUtil;
 
@@ -70,11 +71,11 @@ public class TestOrderService {
 		customer.setSex("male");
 		customer.setTitle("Dr.");
 		customer.setActivationKey(ActivationKeyUtil.getUniqueActivationKey());
-		customer.setEMail("lala@lulu.de");
+		customer.setEMail(ActivationKeyUtil.getUniqueActivationKey()+"@lulu.de");
 		customer.setPassword("geheim;-)");
 		customer.setActive(false);
 		customer.setBillingCustomer(false);
-
+		customer.setRole(Role.CUSTOMER_ROLE.toString());
 		return customer;
 	}
 
